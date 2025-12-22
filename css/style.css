@@ -186,14 +186,14 @@ div {
   max-width: 1800px;
   margin: 0 auto;
   padding: 20px 25px;
-  background-color: rgb(216, 16, 189);
+  background-color: rgb(29, 28, 29);
   display: block;
   unicode-bidi: isolate;
 }
 
 .wrap a {
   text-decoration: none;
-  color: black;
+  color: rgb(221, 221, 221);
   font-size: 1.5rem;
 }
 
@@ -216,6 +216,9 @@ div {
   gap: 20px;
 }
 
+main.wrap {
+  padding-top: 25px;
+}
 /*
 .navigation {
   align-items: center;
@@ -229,3 +232,22 @@ div {
   height: 1.5rem;
 }
 */
+.footer {
+  padding-top: 25px;
+  display: flex;
+  justify-content: center;
+  color: white;
+  background-color: rgb(29, 28, 29);
+}
+
+input[type="search"] {
+  min-width: 230px;
+}
+input[type="search"],
+select {
+  background: whitesmoke;
+  border: 2px solid rgb(29, 28, 29);
+  padding: 10px 15px;
+  border-radius: 10px;
+  outline: none;
+}
