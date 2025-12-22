@@ -105,12 +105,6 @@ select {
   border: 2px solid rgb(199, 107, 241);
 }
 
-.topic {
-  padding-top: 20px;
-  font-size: 1.5rem;
-  color: rgb(221, 221, 221);
-}
-
 .subtext {
   font-size: 0.8rem;
   color: rgb(221, 221, 221);
@@ -118,22 +112,53 @@ select {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
 }
 
 .card {
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.06),
+    rgba(207, 164, 164, 0.06),
     rgba(255, 255, 255, 0.02)
   );
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius);
+  border-radius: 10px;
   overflow: hidden;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
+  padding: 15px 15px;
+}
+.thumb {
+  aspect-ratio: 9/12;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  background: #202535;
+}
+
+.pad {
+  padding: 15px 5px;
+}
+
+.strike {
+  padding-left: 30px;
+  text-decoration-line: line-through;
 }
 .card:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+a.link-card {
+  color: inherit;
+  text-decoration: none;
+}
+
+.section-spacer-40 {
+  margin-top: 40px;
+}
+
+@media (min-width: 900px) {
+  .detail {
+    grid-template-columns: 1fr 1.2fr;
+  }
 }
