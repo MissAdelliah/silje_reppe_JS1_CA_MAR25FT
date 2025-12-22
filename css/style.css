@@ -2,6 +2,7 @@
   font-family: "Inter", sans-serif, Tahoma, Geneva, Verdana;
   box-sizing: border-box;
   margin: 0;
+  background-color: rgb(41, 39, 41);
 }
 
 div {
@@ -10,9 +11,9 @@ div {
 }
 
 .wrap {
-  max-width: 1800px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 20px 25px;
+  padding: 30px 35px;
   background-color: rgb(41, 39, 41);
   display: block;
   unicode-bidi: isolate;
@@ -24,11 +25,14 @@ div {
   font-size: 1rem;
 }
 
+.wrap a:hover {
+  color: rgb(199, 107, 241);
+}
+
 .row {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding-bottom: 15px;
+  padding-bottom: 50px;
 }
 .row-between {
   justify-content: space-between;
@@ -49,11 +53,17 @@ main.wrap {
 }
 
 .footer {
-  padding-top: 25px;
+  padding-top: 35px;
+  padding-bottom: 35px;
   display: flex;
   justify-content: center;
-  color: white;
-  background-color: rgb(41, 39, 41);
+  color: rgb(221, 221, 221);
+  background-color: rgb(199, 107, 241);
+}
+
+.website__rights p {
+  background-color: rgb(199, 107, 241);
+  font-size: 1rem;
 }
 
 input[type="search"] {
@@ -64,12 +74,14 @@ input[type="search"],
 select {
   background: rgb(41, 39, 41);
   border: 2px solid rgb(199, 107, 241);
-  padding: 10px 15px;
+  padding: 4px 4px;
   border-radius: 10px;
+  font-size: 1rem;
+  color: rgb(221, 221, 221);
 }
 
 .header {
-  color: white;
+  color: rgb(221, 221, 221);
 }
 
 /* When clicked button will get a purple outline */
@@ -79,7 +91,7 @@ select {
 
 .chip {
   background: rgb(41, 39, 41);
-  color: white;
+  color: rgb(221, 221, 221);
   border: 1px solid rgb(24, 23, 24);
   border-radius: 50px;
   padding: 8px 12px;
@@ -90,4 +102,38 @@ select {
 /* When hover button moves up */
 .chip:hover {
   transform: translateY(-5px);
+  border: 2px solid rgb(199, 107, 241);
+}
+
+.topic {
+  padding-top: 20px;
+  font-size: 1.5rem;
+  color: rgb(221, 221, 221);
+}
+
+.subtext {
+  font-size: 0.8rem;
+  color: rgb(221, 221, 221);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
