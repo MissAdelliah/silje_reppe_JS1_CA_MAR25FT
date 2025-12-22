@@ -233,9 +233,7 @@ function renderList() {
   }
 
   let html = "<section>";
-  html += '<h2 class="section-heading-sm">Games</h2>';
-  html +=
-    '<p class="muted section-subtext">' + results.length + " result(s)</p>";
+  html += '<p class="subtext">' + results.length + " results</p>";
 
   if (results.length === 0) {
     html += '<div class="status">No items match your filters.</div>';
