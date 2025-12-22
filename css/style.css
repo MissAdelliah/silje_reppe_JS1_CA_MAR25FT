@@ -52,6 +52,10 @@ main.wrap {
   padding-top: 25px;
 }
 
+.status {
+  color: rgb(221, 221, 221);
+}
+
 .footer {
   padding-top: 35px;
   padding-bottom: 35px;
@@ -143,8 +147,10 @@ select {
 }
 
 .strike {
-  padding-left: 30px;
   text-decoration-line: line-through;
+  color: greenyellow;
+  padding-left: 15px;
+  font-size: 0.8rem;
 }
 .card:hover {
   transform: translateY(-5px);
@@ -162,9 +168,10 @@ a.chip {
 
 .muted {
   justify-content: space-between;
+  font-size: 0.8rem;
 }
 
-.section-spacer-40 {
+.container-home {
   margin-top: 40px;
 }
 
