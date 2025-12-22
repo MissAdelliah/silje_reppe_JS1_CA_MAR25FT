@@ -14,6 +14,9 @@
     <a href="index.html">GAMEHUB</a>
     </div>
 <nav class="nav_categories" aria-label="navigation">
+    <div class="search">
+<input id="search" type="search" placeholder="Search for game"> == $0
+      </div>
   <a href="index.html" class="links">HOME</a>
     <a href="checkout.html" class="links">CART
       <span id="items-count-cart" class="" >0</span>
@@ -25,11 +28,17 @@
     </header>
     <main class="wrap">
      <section class="header">
+      <div class="row row-between">
       <h1 class="header-title">Game play</h1>
-      <p>Lets take it to the next level, expirience a lot of different games</p>
-      <div class="search">
-<input id="search" type="search" placeholder="Search for game"> == $0
       </div>
+      <nav id="sort-genre" aria-label="Genres">
+        <button class="bow active" data-genre>All games</button>
+        <button class="bow" data-genre>Shooting</button>
+        <button class="bow" data-genre>Sport</button>
+        <button class="bow" data-genre>Fantasy</button>
+        <button class="bow" data-genre>0</button>
+        <button class="bow" data-genre>0</button>
+      </nav>
      </section>
     </main>
     <footer class="footer">
