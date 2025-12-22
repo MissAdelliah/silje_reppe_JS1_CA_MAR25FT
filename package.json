@@ -1,0 +1,23 @@
+{
+  "name": "silje_reppe_js1_ca_mar25ft",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000s\u0000i\u0000l\u0000j\u0000e\u0000_\u0000r\u0000e\u0000p\u0000p\u0000e\u0000_\u0000J\u0000S\u00001\u0000_\u0000C\u0000A\u0000_\u0000M\u0000A\u0000R\u00002\u00005\u0000F\u0000T\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MissAdelliah/silje_reppe_JS1_CA_MAR25FT.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MissAdelliah/silje_reppe_JS1_CA_MAR25FT/issues"
+  },
+  "homepage": "https://github.com/MissAdelliah/silje_reppe_JS1_CA_MAR25FT#readme",
+  "devDependencies": {
+    "eslint": "^9.39.2"
+  }
+}
