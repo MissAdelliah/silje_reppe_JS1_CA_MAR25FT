@@ -123,11 +123,6 @@ select {
 }
 
 .card {
-  background: linear-gradient(
-    180deg,
-    rgba(207, 164, 164, 0.06),
-    rgba(255, 255, 255, 0.02)
-  );
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   overflow: hidden;
