@@ -21,7 +21,7 @@ div {
 .wrap a {
   text-decoration: none;
   color: rgb(221, 221, 221);
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .row {
@@ -59,24 +59,25 @@ main.wrap {
 input[type="search"] {
   min-width: 230px;
 }
+
 input[type="search"],
 select {
-  background: whitesmoke;
-  border: 2px solid rgb(41, 39, 41);
+  background: rgb(41, 39, 41);
+  border: 2px solid rgb(199, 107, 241);
   padding: 10px 15px;
   border-radius: 10px;
-  outline: none;
 }
 
 .header {
   color: white;
 }
 
-.bow.active {
-  outline: 2px solid blueviolet;
+/* When clicked button will get a purple outline */
+.chip.active {
+  background-image: linear-gradient(rgb(134, 96, 240), rgb(199, 107, 241));
 }
 
-.bow {
+.chip {
   background: rgb(41, 39, 41);
   color: white;
   border: 1px solid rgb(24, 23, 24);
@@ -84,5 +85,9 @@ select {
   padding: 8px 12px;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.5s ease;
+  transition: transform 0.3s ease;
+}
+/* When hover button moves up */
+.chip:hover {
+  transform: translateY(-5px);
 }
