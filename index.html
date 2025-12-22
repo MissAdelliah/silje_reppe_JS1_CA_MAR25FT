@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script type="module" src="/js/products.js" defer></script>
+  </head>
+  <section class="banner">
+    <h1>GAMEHUB</h1>
+  </section>
+  <body>
+    <header class="header">
+      <nav class="navbar--grid">
+        <div class="search-container">
+          <input
+            type="text"
+            id="search"
+            class="search__input"
+            placeholder="Search ..."
+            onkeydown="if(event.key === 'Enter'){ search(); }"
+          />
+        </div>
+        <div class="nav--login">LOG IN / SIGN UP</div>
+        <div></div>
+        <div class="cart-container">
+          <span class="cart--text">CART</span>
+          <span id="cart-count" class="cart-count">1</span>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="all--grid">
+        <div class="div1">
+          <div class="filter">
+            <input
+              type="radio"
+              id="all-filter"
+              name="filter-gender"
+              value="all"
+            />
+            <label for="all-filter">All</label>
+            <input
+              type="radio"
+              id="men-filter"
+              name="filter-gender"
+              value="men"
+            />
+            <label for="men-filter">Men</label>
+            <input
+              type="radio"
+              id="women-filter"
+              name="filter-gender"
+              value="women"
+            />
+            <label for="women-filter">Women</label>
+          </div>
+        </div>
+        <div class="div2">
+          <div class="products--grid"></div>
+        </div>
+        <div class="div3"></div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="website__rights">
+        <p>Terms & conditions</p>
+        <p class="website__rights--text">&copy; 2025 GAMEHUB</p>
+      </div>
+    </footer>
+  </body>
+</html>

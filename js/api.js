@@ -1,5 +1,5 @@
-const API_KEY = "https://docs.noroff.dev/docs/v2/e-commerce/gamehub";
-const API_URL_PRODUCTS = `${API_URL}/rainy-days`;
+const API_KEY = "https://v2.api.noroff.dev/gamehub";
+const API_URL_PRODUCTS = `${API_URL}/gamehub`;
 
 export async function getAllProductData() {
   const url = API_KEY;
