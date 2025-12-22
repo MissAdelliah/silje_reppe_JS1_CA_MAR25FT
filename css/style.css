@@ -148,13 +148,16 @@ select {
 
 .strike {
   text-decoration-line: line-through;
-  color: greenyellow;
+  color: grey;
   padding-left: 15px;
   font-size: 0.8rem;
 }
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(245, 5, 185, 0.3);
+}
+.price {
+  color: yellowgreen;
 }
 a.chip {
   color: inherit;
