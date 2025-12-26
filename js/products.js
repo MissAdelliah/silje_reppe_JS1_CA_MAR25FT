@@ -75,6 +75,9 @@ function createCard(item) {
   const alt = item.image && item.image.alt ? item.image.alt : item.title || "";
 
   return (
+    /*
+    '<section class="detail">' +
+		'<img class="poster" src="' + */
     '<a class="card-link" href="../product/?id=' +
     encodeURIComponent(item.id) +
     '">' +
@@ -216,3 +219,59 @@ async function initCategories() {
 }
 
 window.addEventListener("DOMContentLoaded", initCategories);
+/*
+// loads the movie and hooks up the buttons
+async function renderProduct() {
+  const app = $("#app");
+  const params = getParams();
+  const id = params.get("id");
+
+  if (!app) {
+    throw new Error("Missing #app");
+  }
+
+  if (!id) {
+    app.innerHTML = '<div class="status error">Missing product id.</div>';
+    return;
+  }
+
+  try {
+    app.innerHTML = '<div class="status">Loading product…</div>';
+    const item = await fetchOne(id);
+    if (!item) {
+      throw new Error("Product not found");
+    }
+    app.innerHTML = view(item);
+
+    const addBtn = $("#add-to-cart");
+    const buyBtn = $("#buy-now");
+
+    if (addBtn) {
+      addBtn.addEventListener("click", function () {
+        addToCart(item, 1);
+        updateCartBadge();
+        showToast("Added to basket");
+      });
+    }
+
+    if (buyBtn) {
+      buyBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        addToCart(item, 1);
+        updateCartBadge();
+        showToast("Added to basket");
+        setTimeout(function () {
+          location.href = "../checkout/";
+        }, 300);
+      });
+    }
+  } catch (error) {
+    app.innerHTML =
+      '<div class="status error">' +
+      (error.message || "Something went wrong") +
+      "</div>";
+  }
+}
+
+window.addEventListener("DOMContentLoaded", renderProduct);
+*/
