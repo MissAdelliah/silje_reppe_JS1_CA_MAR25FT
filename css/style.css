@@ -1,13 +1,10 @@
 * {
   font-family: "Inter", sans-serif, Tahoma, Geneva, Verdana;
   box-sizing: border-box;
-  margin: 0;
-  background-color: rgb(41, 39, 41);
 }
 
-div {
-  display: block;
-  unicode-bidi: isolate;
+.body {
+  background-color: rgb(41, 39, 41);
 }
 
 .wrap {
@@ -15,8 +12,6 @@ div {
   margin: 0 auto;
   padding: 30px 35px;
   background-color: rgb(41, 39, 41);
-  display: block;
-  unicode-bidi: isolate;
 }
 
 .wrap a {
@@ -70,18 +65,35 @@ main.wrap {
   font-size: 1rem;
 }
 
-input[type="search"] {
-  min-width: 230px;
+.search {
+  display: flex;
+  align-items: right;
 }
 
-input[type="search"],
-select {
+.search input[type="search"] {
+  min-width: 230px;
+  max-width: 300px; /* optional, keeps input from stretching too much */
   background: rgb(41, 39, 41);
   border: 2px solid rgb(199, 107, 241);
-  padding: 4px 4px;
+  padding: 6px 10px;
   border-radius: 10px;
   font-size: 1rem;
   color: rgb(221, 221, 221);
+  flex-shrink: 0;
+}
+
+.search input:focus {
+  outline: none;
+  border-color: rgb(199, 107, 241);
+}
+
+/* Hidden label */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
 }
 
 .header {
