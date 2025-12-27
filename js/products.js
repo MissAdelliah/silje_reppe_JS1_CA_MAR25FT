@@ -192,7 +192,6 @@ async function initCategories() {
       if (chipGenre === initialGenre) {
         chips[i].classList.add("active");
         found = true;
-        break;
       }
     }
 
