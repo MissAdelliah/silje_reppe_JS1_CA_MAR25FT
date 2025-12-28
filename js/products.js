@@ -53,25 +53,37 @@ function getFinalPrice(item) {
     : Number(item.price || 0);
 }
 
-/*  Create a single product card */
 function createCard(item) {
-  const price = item.onSale
-    ? `<span class="price">NOK ${Number(item.discountedPrice).toFixed(2)}</span>
-       <span class="strike">NOK ${Number(item.price).toFixed(2)}</span>`
-    : `<span class="price">NOK ${Number(item.price).toFixed(2)}</span>`;
+  const productId = item.id;
 
+  // Price HTML with strike if on sale
+  const priceHTML = item.onSale
+    ? `<span class="price-current">NOK ${Number(item.discountedPrice).toFixed(
+        2
+      )}</span>
+       <span class="price-original strike">NOK ${Number(item.price).toFixed(
+         2
+       )}</span>`
+    : `<span class="price-current">NOK ${Number(item.price).toFixed(2)}</span>`;
+
+  // Safe title and genre
   const title = item.title || "Untitled";
   const genre = item.genre || "–";
-  const img = item.image?.url || "";
-  const alt = item.image?.alt || title;
+
+  // Image fallback
+  const imgSrc = item.image?.url || "";
+  const imgAlt = item.image?.alt || title;
 
   return `
-    <a class="card-link" href="../product/?id=${encodeURIComponent(item.id)}">
-      <article class="card" aria-label="${title}">
-        <img class="thumb" src="${img}" alt="${alt}" />
+    <a class="card-link" href="../product/?id=${encodeURIComponent(productId)}">
+      <article class="card" aria-labelledby="title-${productId}">
+        <img class="thumb" src="${imgSrc}" alt="${imgAlt}" />
         <div class="pad">
-          <div class="title">${title}</div>
-          <div class="muted">${genre} - ${price}</div>
+          <h2 id="title-${productId}" class="title">${title}</h2>
+          <div class="muted">
+            <span class="genre">${genre}</span> - 
+            <span class="price">${priceHTML}</span>
+          </div>
         </div>
       </article>
     </a>
@@ -101,7 +113,8 @@ function renderList() {
   });
 
   // Sorting
-  if (sort === "title") results.sort((a, b) => a.title.localeCompare(b.title));
+  if (sort === "title")
+    results.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
   else if (sort === "price-asc")
     results.sort((a, b) => getFinalPrice(a) - getFinalPrice(b));
   else if (sort === "price-desc")
