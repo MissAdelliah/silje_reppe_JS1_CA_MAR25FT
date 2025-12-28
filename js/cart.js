@@ -75,7 +75,7 @@ function renderCart() {
             <p class="price">NOK ${price.toFixed(2)} x ${quantity}</p>
             <div class="cart-buttons">
               <button class="button-add increase-btn">+</button>
-              <button class="button-add remove-btn">-</button>
+              <button class="button-add remove-btn">Remove</button>
             </div>
           </div>
         </div>
