@@ -1,6 +1,8 @@
 import { fetchAll } from "./api.js";
 
 const cartKey = "cart";
+
+// Cache DOM elements safely
 const cartItemsContainer = document.getElementById("cart-items");
 const cartCount = document.getElementById("items-count-cart");
 const cartLink = document.querySelector(".cart-link");
@@ -10,12 +12,13 @@ const checkoutBtn = document.getElementById("checkout-btn");
 let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 let products = [];
 
-// Initialize
+// Initialize cart
 async function initCart() {
   products = await fetchAll();
   updateCartUI();
   renderCart();
 
+  // Checkout button event
   checkoutBtn?.addEventListener("click", () => {
     if (cart.length === 0) return alert("Your cart is empty!");
     alert("Checkout complete! Thank you for your purchase.");
@@ -31,13 +34,15 @@ function saveCart() {
   updateCartUI();
 }
 
-// Update cart count and total
+// Update cart count and total safely
 function updateCartUI() {
   const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
-  cartCount.textContent = totalItems;
 
-  if (cart.length > 0) cartLink.classList.add("has-items");
-  else cartLink.classList.remove("has-items");
+  if (cartCount) cartCount.textContent = totalItems;
+  if (cartLink) {
+    if (totalItems > 0) cartLink.classList.add("has-items");
+    else cartLink.classList.remove("has-items");
+  }
 
   const total = cart.reduce(
     (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
@@ -70,7 +75,7 @@ function renderCart() {
             <p class="price">NOK ${price.toFixed(2)} x ${quantity}</p>
             <div class="cart-buttons">
               <button class="button-add increase-btn">+</button>
-              <button class="button-add remove-btn">Remove</button>
+              <button class="button-add remove-btn">-</button>
             </div>
           </div>
         </div>
@@ -92,7 +97,7 @@ function renderCart() {
     });
   });
 
-  // Decrease / Remove
+  // Decrease quantity / remove
   cartItemsContainer.querySelectorAll(".remove-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const card = e.target.closest(".cart-card");
@@ -128,5 +133,5 @@ export function addToCart(product) {
   renderCart();
 }
 
-// Initialize
+// Initialize safely
 window.addEventListener("DOMContentLoaded", initCart);
