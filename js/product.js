@@ -1,5 +1,6 @@
 import { $, getParams } from "./utils.js";
 import { fetchAll } from "./api.js"; // Or fetchOne if your API supports fetching by ID
+import { addToCart } from "./cart.js";
 
 async function renderProduct() {
   const container = $("#product-details");

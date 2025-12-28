@@ -1,93 +1,97 @@
-const KEY = "se_cart_v1";
+import { fetchAll } from "./api.js";
 
-// get localStorage array
-export function getCart() {
-  try {
-    return JSON.parse(localStorage.getItem(KEY)) || [];
-  } catch {
-    return [];
-  }
-}
+const cartKey = "cart";
+const cartItemsContainer = document.getElementById("cart-items");
+const cartCount = document.getElementById("items-count-cart");
+const cartLink = document.querySelector(".cart-link");
+const cartTotalEl = document.getElementById("cart-total");
+const checkoutBtn = document.getElementById("checkout-btn");
 
-// saves array in cart to localStorage
-function saveCart(items) {
-  localStorage.setItem(KEY, JSON.stringify(items));
-}
+let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+let products = [];
 
-export function clearCart() {
-  saveCart([]);
-}
-export function cartCount() {
-  const items = getCart();
-  let total = 0;
+// Initialize
+async function initCart() {
+  products = await fetchAll();
+  updateCartUI();
+  renderCart();
 
-  for (let i = 0; i < items.length; i++) {
-    total += items[i].qty;
-  }
-
-  return total;
-}
-
-export function cartTotal() {
-  const items = getCart();
-  let sum = 0;
-
-  for (let i = 0; i < items.length; i++) {
-    sum += items[i].qty * Number(items[i].price);
-  }
-
-  return sum;
-}
-
-export function addToCart(product, qty) {
-  if (!qty) {
-    qty = 1;
-  }
-
-  const items = getCart();
-  const id = product.id;
-  let price = product.onSale ? product.discountedPrice : product.price;
-  price = Number(price);
-
-  let found = false;
-
-  for (let i = 0; i < items.length; i++) {
-    if (items[i].id === id) {
-      items[i].qty += qty;
-      found = true;
-      break;
-    }
-  }
-
-  if (!found) {
-    items.push({
-      id: id,
-      title: product.title,
-      image: product.image && product.image.url ? product.image.url : "",
-      price: price,
-      qty: qty,
-    });
-  }
-
-  saveCart(items);
-}
-
-export function removeFromCart(id) {
-  const items = getCart().filter(function (item) {
-    return item.id !== id;
+  checkoutBtn?.addEventListener("click", () => {
+    if (cart.length === 0) return alert("Your cart is empty!");
+    alert("Checkout complete! Thank you for your purchase.");
+    cart = [];
+    saveCart();
+    renderCart();
   });
-  saveCart(items);
 }
 
-export function setQty(id, qty) {
-  const items = getCart();
-  const value = Math.max(1, Number(qty) || 1);
+// Save cart to localStorage and update header
+function saveCart() {
+  localStorage.setItem(cartKey, JSON.stringify(cart));
+  updateCartUI();
+}
 
-  for (let i = 0; i < items.length; i++) {
-    if (items[i].id === id) {
-      items[i].qty = value;
-      break;
-    }
+// Update cart count and indicator
+function updateCartUI() {
+  cartCount.textContent = cart.length;
+  if (cart.length > 0) cartLink.classList.add("has-items");
+  else cartLink.classList.remove("has-items");
+
+  const total = cart.reduce(
+    (sum, item) => sum + (item.discountedPrice || item.price || 0),
+    0
+  );
+  if (cartTotalEl) cartTotalEl.textContent = total.toFixed(2);
+}
+
+// Render cart items
+function renderCart() {
+  if (!cartItemsContainer) return;
+
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML = `<div class="status">Your cart is empty.</div>`;
+    return;
   }
-  saveCart(items);
+
+  cartItemsContainer.innerHTML = cart
+    .map((item) => {
+      const title = item.title || "Untitled";
+      const price = item.onSale ? item.discountedPrice : item.price;
+      const imgSrc = item.image?.url || "";
+      return `
+        <div class="card cart-card" data-id="${item.id}">
+          <img class="thumb" src="${imgSrc}" alt="${title}" />
+          <div class="pad">
+            <h2 class="title">${title}</h2>
+            <p class="price">NOK ${price.toFixed(2)}</p>
+            <button class="button-add remove-btn">Remove</button>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  // Add remove button events
+  cartItemsContainer.querySelectorAll(".remove-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const card = e.target.closest(".cart-card");
+      const id = card.dataset.id;
+      cart = cart.filter((p) => String(p.id) !== id);
+      saveCart();
+      renderCart();
+    });
+  });
 }
+
+// Add to cart function for products.js
+export function addToCart(productId) {
+  const product = products.find((p) => String(p.id) === String(productId));
+  if (!product) return;
+
+  cart.push(product);
+  saveCart();
+  renderCart();
+}
+
+// Initialize on page load
+window.addEventListener("DOMContentLoaded", initCart);

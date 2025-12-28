@@ -13,16 +13,18 @@
         <div class="logo">
           <a href="index.html">GAMEHUB</a>
         </div>
-        <div class="search">
-          <label for="search" class="visually-hidden">Search games</label>
-          <input id="search" type="search" placeholder="Search for game" />
+        <div class="header-action row">
+          <div class="search">
+            <label for="search" class="visually-hidden">Search games</label>
+            <input id="search" type="search" placeholder="Search for game" />
+          </div>
+          <nav class="nav_categories" aria-label="Main navigation">
+            <a href="checkout.html" class="links cart.link">
+              CART
+              <span id="items-count-cart">0</span>
+            </a>
+          </nav>
         </div>
-        <nav class="nav_categories" aria-label="Main navigation">
-          <a href="checkout.html" class="links">
-            CART
-            <span id="items-count-cart">0</span>
-          </a>
-        </nav>
       </div>
     </header>
     <main class="wrap">
@@ -31,10 +33,7 @@
           <h1 class="header-title">Online store</h1>
         </div>
         <nav id="genre-nav" aria-label="Genres"></nav>
-        <!-- Below your #genre-nav -->
-        <nav id="age-nav" aria-label="Age rating filters">
-          <!-- Buttons will be added dynamically -->
-        </nav>
+        <nav id="age-nav" aria-label="Age rating filters"></nav>
       </section>
       <section id="product-list" class="container-home"></section>
     </main>

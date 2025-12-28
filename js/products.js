@@ -1,5 +1,6 @@
 import { $, getParams } from "./utils.js";
 import { fetchAll } from "./api.js";
+import { addToCart } from "./cart.js";
 
 let products = [];
 
@@ -152,6 +153,16 @@ function renderList() {
     else if (activeAge === "adult") matchesAge = age >= 18;
 
     return matchesText && matchesGenre && matchesAge;
+  });
+
+  // Attach Add to Cart events after rendering
+  document.querySelectorAll(".button-add").forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      const productId = results[index].id; // results comes from renderList()
+      addToCart(productId);
+      // optional feedback
+      alert("Product added to cart!");
+    });
   });
 
   // Sorting

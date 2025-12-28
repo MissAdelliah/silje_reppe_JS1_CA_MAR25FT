@@ -32,6 +32,13 @@ body {
 .row-between {
   justify-content: space-between;
 }
+
+.header-action {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .links {
   padding: 15px;
   text-decoration: none;
@@ -100,7 +107,6 @@ main.wrap {
   color: rgb(221, 221, 221);
 }
 
-/* When clicked button will get a purple outline */
 .chip.active {
   background-image: linear-gradient(rgb(134, 96, 240), rgb(199, 107, 241));
 }
@@ -116,7 +122,7 @@ main.wrap {
   transition: transform 0.3s ease;
   margin: 3px;
 }
-/* When hover button moves up */
+
 .chip:hover {
   transform: translateY(-5px);
   border: 2px solid rgb(199, 107, 241);
@@ -185,7 +191,6 @@ a.chip {
   margin-top: 40px;
 }
 
-/* For the prouct page */
 #product-details {
   display: flex;
   flex-direction: column;
@@ -241,8 +246,6 @@ a.chip {
   background-color: rgb(134, 96, 240);
 }
 
-/*product page*/
-/* Product page card */
 .product-card {
   display: flex;
   flex-direction: column;
@@ -258,11 +261,10 @@ a.chip {
 }
 
 .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(199, 107, 241, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(197, 197, 197, 0.3);
 }
 
-/* Image */
 .product-image {
   width: 100%;
   max-height: 500px;
@@ -271,7 +273,6 @@ a.chip {
   background: #202535;
 }
 
-/* Product info */
 .product-info h1 {
   font-size: 2rem;
   margin-bottom: 10px;
@@ -284,7 +285,6 @@ a.chip {
   line-height: 1.5;
 }
 
-/* Price styling */
 .price-current {
   color: yellowgreen;
   font-weight: 600;
@@ -297,26 +297,36 @@ a.chip {
   font-size: 0.9rem;
 }
 
-/* Add to cart button */
 .button-add {
-  margin-top: 100px;
   padding: 12px 25px;
   font-size: 1rem;
   font-weight: 600;
   border: none;
   border-radius: 10px;
-  background: rgb(199, 107, 241);
-  color: #fff;
+  background: rgb(41, 39, 41);
+  border: 2px solid #9e9d9d;
+  color: #9e9d9d;
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .button-add:hover {
-  background: rgb(134, 96, 240);
-  transform: translateY(-3px);
+  background: rgb(83, 78, 83);
+  color: #fff;
+  transform: translateY(-1px);
 }
 
-/* Responsive layout */
+.status {
+  text-align: center;
+  font-size: 1rem;
+  padding: 20px;
+  color: rgb(221, 221, 221);
+}
+
+.status.error {
+  color: rgb(245, 100, 100);
+}
+
 @media (min-width: 900px) {
   .product-card {
     flex-direction: row;
@@ -332,21 +342,6 @@ a.chip {
     display: flex;
     flex-direction: column;
   }
-}
-
-/* Status messages */
-.status {
-  text-align: center;
-  font-size: 1rem;
-  padding: 20px;
-  color: rgb(221, 221, 221);
-}
-
-.status.error {
-  color: rgb(245, 100, 100);
-}
-
-@media (min-width: 900px) {
   .detail {
     grid-template-columns: 1fr 1.2fr;
   }
