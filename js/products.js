@@ -49,7 +49,7 @@ function buildAgeNav() {
   function addChip(label, value) {
     const button = document.createElement("button");
     button.className = "chip";
-    button.textContent = label; // keep your styling
+    button.textContent = label;
     button.dataset.age = value;
 
     button.addEventListener("click", () => {
@@ -147,7 +147,7 @@ function renderList() {
 
     // Age filtering
     let matchesAge = true;
-    const age = parseInt(game.ageRating) || 0;
+    const age = parseInt((game.ageRating || "").replace(/\D/g, "")) || 0;
     if (activeAge === "kids") matchesAge = age < 18;
     else if (activeAge === "adult") matchesAge = age >= 18;
 
@@ -170,8 +170,10 @@ function renderList() {
       : `<div class="grid">${results.map(createCard).join("")}</div>`;
 
   productList.innerHTML = `
-    <p class="subtext">${results.length} results</p>
-    ${htmlContent}
+    <section>
+      <p class="subtext">${results.length} results</p>
+      ${htmlContent}
+    </section>
   `;
 }
 
