@@ -31,14 +31,16 @@ function saveCart() {
   updateCartUI();
 }
 
-// Update cart count and indicator
+// Update cart count and total
 function updateCartUI() {
-  cartCount.textContent = cart.length;
+  const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+  cartCount.textContent = totalItems;
+
   if (cart.length > 0) cartLink.classList.add("has-items");
   else cartLink.classList.remove("has-items");
 
   const total = cart.reduce(
-    (sum, item) => sum + (item.discountedPrice || item.price || 0),
+    (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
     0
   );
   if (cartTotalEl) cartTotalEl.textContent = total.toFixed(2);
@@ -56,42 +58,75 @@ function renderCart() {
   cartItemsContainer.innerHTML = cart
     .map((item) => {
       const title = item.title || "Untitled";
-      const price = item.onSale ? item.discountedPrice : item.price;
       const imgSrc = item.image?.url || "";
+      const price = item.price || 0;
+      const quantity = item.quantity || 1;
+
       return `
         <div class="card cart-card" data-id="${item.id}">
           <img class="thumb" src="${imgSrc}" alt="${title}" />
           <div class="pad">
             <h2 class="title">${title}</h2>
-            <p class="price">NOK ${price.toFixed(2)}</p>
-            <button class="button-add remove-btn">Remove</button>
+            <p class="price">NOK ${price.toFixed(2)} x ${quantity}</p>
+            <div class="cart-buttons">
+              <button class="button-add increase-btn">+</button>
+              <button class="button-add remove-btn">Remove</button>
+            </div>
           </div>
         </div>
       `;
     })
     .join("");
 
-  // Add remove button events
+  // Increase quantity
+  cartItemsContainer.querySelectorAll(".increase-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const card = e.target.closest(".cart-card");
+      const id = card.dataset.id;
+      const cartItem = cart.find((p) => String(p.id) === id);
+      if (cartItem) {
+        cartItem.quantity += 1;
+        saveCart();
+        renderCart();
+      }
+    });
+  });
+
+  // Decrease / Remove
   cartItemsContainer.querySelectorAll(".remove-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const card = e.target.closest(".cart-card");
       const id = card.dataset.id;
-      cart = cart.filter((p) => String(p.id) !== id);
-      saveCart();
-      renderCart();
+      const cartItem = cart.find((p) => String(p.id) === id);
+      if (cartItem) {
+        cartItem.quantity -= 1;
+        if (cartItem.quantity <= 0) {
+          cart = cart.filter((p) => String(p.id) !== id);
+        }
+        saveCart();
+        renderCart();
+      }
     });
   });
 }
 
-// Add to cart function for products.js
-export function addToCart(productId) {
-  const product = products.find((p) => String(p.id) === String(productId));
-  if (!product) return;
-
-  cart.push(product);
+// Add product to cart (called from product.js)
+export function addToCart(product) {
+  const existing = cart.find((p) => String(p.id) === String(product.id));
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({
+      id: product.id,
+      title: product.title,
+      price: Number(product.onSale ? product.discountedPrice : product.price),
+      image: product.image,
+      quantity: 1,
+    });
+  }
   saveCart();
   renderCart();
 }
 
-// Initialize on page load
+// Initialize
 window.addEventListener("DOMContentLoaded", initCart);

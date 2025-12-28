@@ -1,64 +1,70 @@
 import { $, getParams } from "./utils.js";
-import { fetchAll } from "./api.js"; // Or fetchOne if your API supports fetching by ID
+import { fetchAll } from "./api.js";
 import { addToCart } from "./cart.js";
 
-async function renderProduct() {
-  const container = $("#product-details");
-  if (!container) return;
+let products = [];
 
+async function renderProduct() {
+  const details = $("#product-details");
+  if (!details) return;
+
+  // Correctly get product ID from URL
   const params = getParams();
-  const productId = params.get("id"); // gets ?id=123 from URL
+  const productId = params.get ? params.get("id") : params.id;
 
   if (!productId) {
-    container.innerHTML =
-      '<div class="status error">No product ID provided.</div>';
+    details.innerHTML = `<div class="status">Product not found.</div>`;
     return;
   }
 
-  container.innerHTML = '<div class="status">Loading product…</div>';
+  // Load all products if not already
+  if (products.length === 0) products = await fetchAll();
+  const product = products.find((p) => String(p.id) === String(productId));
 
-  try {
-    const allProducts = await fetchAll(); // Or fetchOne(productId)
-    const product = allProducts.find((p) => String(p.id) === productId);
-
-    if (!product) {
-      container.innerHTML =
-        '<div class="status error">Product not found.</div>';
-      return;
-    }
-
-    const priceHTML = product.onSale
-      ? `<span class="price-current">NOK ${Number(
-          product.discountedPrice
-        ).toFixed(2)}</span>
-         <span class="price-original strike">NOK ${Number(
-           product.price
-         ).toFixed(2)}</span>`
-      : `<span class="price-current">NOK ${Number(product.price).toFixed(
-          2
-        )}</span>`;
-
-    container.innerHTML = `
-  <div class="product-card">
-    <img class="product-image" src="${product.image?.url || ""}" alt="${
-      product.image?.alt || product.title
-    }" />
-    <div class="product-info">
-      <h1>${product.title || "Untitled"}</h1>
-      <p><strong>Genre:</strong> ${product.genre || "–"}</p>
-      <p><strong>Released:</strong> ${product.released || "–"}</p>
-      <p><strong>Age Rating:</strong> ${product.ageRating || "–"}</p>
-      <p>${product.description || ""}</p>
-      <p>${priceHTML}</p>
-      <button class="button-add">Add to Cart</button>
-    </div>
-  </div>
-`;
-  } catch (error) {
-    container.innerHTML = `<div class="status error">${
-      error.message || "Failed to load"
-    } — please try again.</div>`;
+  if (!product) {
+    details.innerHTML = `<div class="status">Product not found.</div>`;
+    return;
   }
+
+  const priceHTML = product.onSale
+    ? `<span class="price-current">NOK ${Number(
+        product.discountedPrice
+      ).toFixed(2)}</span> 
+       <span class="price-original strike">NOK ${Number(product.price).toFixed(
+         2
+       )}</span>`
+    : `<span class="price-current">NOK ${Number(product.price).toFixed(
+        2
+      )}</span>`;
+
+  // Insert product HTML
+  details.innerHTML = `
+    <div class="product-card">
+      <img class="product-image" src="${product.image?.url || ""}" alt="${
+    product.image?.alt || product.title
+  }" />
+      <div class="product-info">
+        <h1>${product.title}</h1>
+        <p>${product.description || ""}</p>
+        <p>Genre: ${product.genre || "–"}</p>
+        <p>Age Rating: ${product.ageRating || "–"}</p>
+        <p>Price: ${priceHTML}</p>
+        <button id="add-to-cart" class="button-add">Add to Cart</button>
+      </div>
+    </div>
+  `;
+
+  // Add event listener for Add to Cart
+  $("#add-to-cart")?.addEventListener("click", () => {
+    addToCart({
+      id: product.id,
+      title: product.title,
+      price: product.onSale ? product.discountedPrice : product.price,
+      image: product.image,
+    });
+
+    alert("Product added to cart!");
+  });
 }
 
-window.addEventListener("DOMContentLoaded", renderProduct);
+document.addEventListener("DOMContentLoaded", renderProduct);
