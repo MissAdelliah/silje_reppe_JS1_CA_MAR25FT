@@ -28,9 +28,51 @@
       <section id="cart-items" class="container-home">
         <!-- Cart products dynamically injected here -->
       </section>
+      <section id="checkout-forms" class="checkout-forms">
+        <form id="customer-form" class="checkout-form">
+          <h2>Customer Information</h2>
+          <label>
+            Email
+            <input type="email" required />
+          </label>
+          <label>
+            Address
+            <input type="text" required />
+          </label>
+          <label>
+            City
+            <input type="text" required />
+          </label>
+          <label>
+            Postal Code
+            <input type="text" required />
+          </label>
+        </form>
+        <form id="payment-form" class="checkout-form">
+          <h2>Payment Details</h2>
+          <label>
+            Card Number
+            <input type="text" placeholder="1234 5678 9012 3456" required />
+          </label>
+          <label class="row">
+            <span>
+              Expire
+              <input type="text" placeholder="MM/YY" required />
+            </span>
+            <span>
+              CVC
+              <input type="text" placeholder="123" required />
+            </span>
+          </label>
+          <!--
+    <button type="submit" class="button-confirm">
+      Complete Purchase
+    </button> -->
+        </form>
+      </section>
       <div id="cart-summary" class="container-home">
         <p>Total: <span id="cart-total">0.00</span> NOK</p>
-        <button id="checkout-btn" class="button-add">Checkout</button>
+        <button id="checkout-btn" class="button-add">Confirm order</button>
       </div>
     </main>
 

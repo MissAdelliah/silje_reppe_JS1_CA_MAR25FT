@@ -132,6 +132,17 @@ export function addToCart(product) {
   saveCart();
   renderCart();
 }
+const paymentForm = document.getElementById("payment-form");
+
+paymentForm?.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // Simulated checkout success
+  cart = [];
+  localStorage.removeItem("cart");
+
+  window.location.href = "/checkout/confirmation/index.html";
+});
 
 // Initialize safely
 window.addEventListener("DOMContentLoaded", initCart);
