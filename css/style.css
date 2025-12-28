@@ -185,6 +185,62 @@ a.chip {
   margin-top: 40px;
 }
 
+/* For the prouct page */
+#product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  color: rgb(221, 221, 221);
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-image {
+  width: 100%;
+  max-width: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product-info h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.product-info p {
+  margin: 5px 0;
+}
+
+.price-current {
+  color: yellowgreen;
+  font-weight: bold;
+}
+
+.price-original {
+  text-decoration: line-through;
+  color: grey;
+  margin-left: 10px;
+}
+
+.button-add {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: rgb(199, 107, 241);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.button-add:hover {
+  background-color: rgb(134, 96, 240);
+}
+
 @media (min-width: 900px) {
   .detail {
     grid-template-columns: 1fr 1.2fr;

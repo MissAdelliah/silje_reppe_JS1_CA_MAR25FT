@@ -177,3 +177,5 @@ async function initCategories() {
 }
 
 window.addEventListener("DOMContentLoaded", initCategories);
+
+/* for the product page*/
