@@ -8,43 +8,34 @@
     <script type="module" src="/js/products.js" defer></script>
   </head>
   <body>
-  <header>
-  <div class="wrap">
-  <div class="row row-between">
-    <div class="logo">
-    <a href="index.html">GAMEHUB</a>
-    </div>
-<nav class="nav_categories" aria-label="navigation">
-    <div class="search">
-<input id="search" type="search" placeholder="Search for game"> 
+    <header>
+      <div class="wrap row row-between">
+        <div class="logo">
+          <a href="index.html">GAMEHUB</a>
+        </div>
+        <div class="header-action row">
+          <div class="search">
+            <label for="search" class="visually-hidden">Search games</label>
+            <input id="search" type="search" placeholder="Search for game" />
+          </div>
+          <nav class="nav_categories" aria-label="Main navigation">
+            <a href="checkout.html" class="links cart.link">
+              CART
+              <span id="items-count-cart">0</span>
+            </a>
+          </nav>
+        </div>
       </div>
-    <a href="checkout.html" class="links">CART
-      <span id="items-count-cart" class="" >0</span>
-    </a>
-  </div>
-</nav>
-</div>
-</div>
     </header>
     <main class="wrap">
-     <section class="header">
-      <div class="row row-between">
-      <h1 class="header-title">Online store</h1>
-      </div>
-      <nav id="genre-nav" aria-label="Genres">
-        <button class="chip" data-genre>All games</button>
-        <button class="chip" data-genre>Action</button>
-        <button class="chip" data-genre>Sports</button>
-        <button class="chip" data-genre>Adventure</button>
-        <button class="chip" data-genre>Horror</button>
-      </nav>
-     </section>
-     <section id="app" class="container-home">
-     <p class="subtext">12 results</p>
-     <div class="grid">
-     </div>
-     </section>
-    </section>
+      <section class="header">
+        <div class="row row-between">
+          <h1 class="header-title">Online store</h1>
+        </div>
+        <nav id="genre-nav" aria-label="Genres"></nav>
+        <nav id="age-nav" aria-label="Age rating filters"></nav>
+      </section>
+      <section id="product-list" class="container-home"></section>
     </main>
     <footer class="footer">
       <div class="website__rights">

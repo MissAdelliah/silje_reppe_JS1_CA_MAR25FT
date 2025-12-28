@@ -3,47 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Product</title>
+    <title>Cart / Checkout</title>
     <link rel="stylesheet" href="css/style.css" />
-    <script type="module" src="/js/products.js" defer></script>
+    <script type="module" src="/js/cart.js" defer></script>
   </head>
   <body>
-  <header>
-  <div class="wrap">
-  <div class="row row-between">
-    <div class="logo">
-    <a href="index.html">GAMEHUB</a>
-    </div>
-<nav class="nav_categories" aria-label="navigation">
+    <header>
+      <div class="wrap row row-between">
+        <div class="logo">
+          <a href="index.html">GAMEHUB</a>
+        </div>
+        <nav class="nav_categories" aria-label="Main navigation">
+          <a href="checkout.html" class="links cart-link">
+            CART
+            <span id="items-count-cart">0</span>
+            <span class="cart-indicator" aria-hidden="true"></span>
+          </a>
+        </nav>
+      </div>
+    </header>
 
-  <a href="index.html" class="links">GAMES</a>
-    <a href="checkout.html" class="links">CART
-      <span id="items-count-cart" class="" >0</span>
-    </a>
-  </div>
-</nav>
-</div>
-</div>
-</header>
-<main class="wrap" id="app">
-  <section class="detail">
-  <img class="image" src="" alt="">
-  <div class="meta">
-    <h1>Game title</h1>
-    <div class="badges">
-    <span class="badge">Genre</span>
-<span class="badge">released</span>
-<span class="badge">agerequire</span>
-<span class="badge">gamehub</span>
-<span class="badge">game</span>
-  </section>
-</div>
-<p class="muted">text</p>
-<div>
-  <span class="price">NOK</span>
-</div>
-<button id="add-to-cart" class="btn">ADD TO CART</button>
-</main>
-<footer></footer>
+    <main class="wrap">
+      <h1 class="header-title">Your Cart</h1>
+      <section id="cart-items" class="container-home">
+        <!-- Cart products dynamically injected here -->
+      </section>
+      <div id="cart-summary" class="container-home">
+        <p>Total: <span id="cart-total">0.00</span> NOK</p>
+        <button id="checkout-btn" class="button-add">Checkout</button>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="website__rights">
+        <p>Terms & conditions</p>
+        <p class="website__rights--text">&copy; 2025 GAMEHUB</p>
+      </div>
+    </footer>
   </body>
-  </html>
+</html>

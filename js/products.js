@@ -1,20 +1,21 @@
 import { $, getParams } from "./utils.js";
 import { fetchAll } from "./api.js";
+import { addToCart } from "./cart.js";
 
-let allGames = [];
+let products = [];
 
+/* --------------------- Genre Navigation --------------------- */
 function buildGenreNav(items) {
   const nav = $("#genre-nav");
   if (!nav) return;
 
-  const genres = [];
-  for (let i = 0; i < items.length; i++) {
-    const g = (items[i].genre || "").trim();
-    if (g && genres.indexOf(g) === -1) {
-      genres.push(g);
-    }
-  }
-  genres.sort();
+  const genreSet = new Set();
+  items.forEach((item) => {
+    const g = (item.genre || "").trim();
+    if (g) genreSet.add(g);
+  });
+
+  const genres = Array.from(genreSet).sort();
 
   nav.innerHTML = "";
 
@@ -23,194 +24,200 @@ function buildGenreNav(items) {
     button.className = "chip";
     button.textContent = label;
     button.dataset.genre = value || "";
-    button.addEventListener("click", function () {
-      const chips = nav.querySelectorAll(".chip");
-      for (let i = 0; i < chips.length; i++) {
-        chips[i].classList.remove("active");
-      }
+
+    button.addEventListener("click", () => {
+      nav
+        .querySelectorAll(".chip")
+        .forEach((chip) => chip.classList.remove("active"));
       button.classList.add("active");
       renderList();
     });
+
     nav.appendChild(button);
   }
 
   addChip("All Games", "");
-
-  for (let i = 0; i < genres.length; i++) {
-    addChip(genres[i], genres[i]);
-  }
+  genres.forEach((genre) => addChip(genre, genre));
 }
 
+/* --------------------- Age Navigation --------------------- */
+function buildAgeNav() {
+  const nav = $("#age-nav");
+  if (!nav) return;
+
+  nav.innerHTML = "";
+
+  function addChip(label, value) {
+    const button = document.createElement("button");
+    button.className = "chip";
+    button.textContent = label;
+    button.dataset.age = value;
+
+    button.addEventListener("click", () => {
+      nav
+        .querySelectorAll(".chip")
+        .forEach((chip) => chip.classList.remove("active"));
+      button.classList.add("active");
+      renderList();
+    });
+
+    nav.appendChild(button);
+  }
+
+  addChip("All Games", "all");
+  addChip("Kids", "kids");
+  addChip("Adult", "adult");
+}
+
+/* --------------------- Active Filters --------------------- */
 function getActiveGenre() {
-  const nav = $("#genre-nav");
-  if (!nav) return "";
-  const active = nav.querySelector(".chip.active");
-  if (!active) return "";
-  return (active.dataset.genre || "").toLowerCase();
+  const active = $("#genre-nav .chip.active");
+  return active ? (active.dataset.genre || "").toLowerCase() : "";
 }
 
+function getActiveAge() {
+  const active = $("#age-nav .chip.active");
+  return active ? active.dataset.age : "all";
+}
+
+/* --------------------- Price Helper --------------------- */
 function getFinalPrice(item) {
-  return item.onSale ? item.discountedPrice : item.price;
+  return item.onSale
+    ? Number(item.discountedPrice || 0)
+    : Number(item.price || 0);
 }
 
+/* --------------------- Product Card --------------------- */
 function createCard(item) {
-  let price;
-  if (item.onSale === true) {
-    price =
-      '<span class="price">NOK ' +
-      Number(item.discountedPrice).toFixed(2) +
-      '</span><span class="strike">NOK ' +
-      Number(item.price).toFixed(2) +
-      "</span>";
-  } else {
-    price =
-      '<span class="price">NOK ' + Number(item.price).toFixed(2) + "</span>";
-  }
+  const productId = item.id;
+  const priceHTML = item.onSale
+    ? `<span class="card__price-current">NOK ${Number(
+        item.discountedPrice
+      ).toFixed(2)}</span>
+       <span class="card__price-original strike">NOK ${Number(
+         item.price
+       ).toFixed(2)}</span>`
+    : `<span class="card__price-current">NOK ${Number(item.price).toFixed(
+        2
+      )}</span>`;
 
   const title = item.title || "Untitled";
   const genre = item.genre || "–";
-  const released = item.released || "";
-  const rating = item.rating || "–";
-  const img = item.image && item.image.url ? item.image.url : "";
-  const alt = item.image && item.image.alt ? item.image.alt : item.title || "";
+  const imgSrc = item.image?.url || "";
+  const imgAlt = item.image?.alt || title;
 
-  return (
-    '<a class="card-link" href="../product/?id=' +
-    encodeURIComponent(item.id) +
-    '">' +
-    '<article class="card" aria-label="' +
-    title +
-    '">' +
-    '<img class="thumb" src="' +
-    img +
-    '" alt="' +
-    alt +
-    '" />' +
-    '<div class="pad">' +
-    '<div class="title">' +
-    title +
-    "</div>" +
-    '<div class="muted">' +
-    genre +
-    " - " +
-    price +
-    "</div>" +
-    "</div>" +
-    "</article>" +
-    "</a>"
-  );
+  return `
+    <a class="card-link" href="product.html?id=${encodeURIComponent(
+      productId
+    )}">
+      <article class="card" aria-labelledby="card-title-${productId}">
+        <img class="thumb" src="${imgSrc}" alt="${imgAlt}" />
+        <div class="pad">
+          <h2 id="card-title-${productId}" class="title">${title}</h2>
+          <div class="muted">
+            <span class="genre">${genre}</span> - 
+            <span class="price">${priceHTML}</span>
+          </div>
+        </div>
+      </article>
+    </a>
+  `;
 }
 
+/* --------------------- Render List --------------------- */
 function renderList() {
-  const app = $("#app");
+  const productList = $("#product-list");
   const searchInput = $("#search");
   const sortSelect = $("#sort");
-  if (!app) return;
 
-  const searchText = searchInput ? searchInput.value.toLowerCase() : "";
+  if (!productList) return;
+
+  const searchText = searchInput?.value.toLowerCase() || "";
   const selectedGenre = getActiveGenre();
-  const sort = sortSelect ? sortSelect.value : "relevance";
+  const activeAge = getActiveAge();
+  const sort = sortSelect?.value || "relevance";
 
-  let results = allGames.filter(function (game) {
+  const results = products.filter((game) => {
     const title = (game.title || "").toLowerCase();
     const desc = (game.description || "").toLowerCase();
     const genre = (game.genre || "").toLowerCase();
 
-    let matchesText = true;
-    if (searchText) {
-      matchesText =
-        title.indexOf(searchText) !== -1 || desc.indexOf(searchText) !== -1;
-    }
+    const matchesText =
+      !searchText || title.includes(searchText) || desc.includes(searchText);
+    const matchesGenre = !selectedGenre || genre === selectedGenre;
 
-    let matchesGenre = true;
-    if (selectedGenre) {
-      matchesGenre = genre === selectedGenre;
-    }
+    // Age filtering
+    let matchesAge = true;
+    const age = parseInt((game.ageRating || "").replace(/\D/g, "")) || 0;
+    if (activeAge === "kids") matchesAge = age < 18;
+    else if (activeAge === "adult") matchesAge = age >= 18;
 
-    return matchesText && matchesGenre;
+    return matchesText && matchesGenre && matchesAge;
   });
 
-  if (sort === "title") {
-    results.sort(function (a, b) {
-      return a.title.localeCompare(b.title);
+  // Attach Add to Cart events after rendering
+  document.querySelectorAll(".button-add").forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      const productId = results[index].id; // results comes from renderList()
+      addToCart(productId);
+      // optional feedback
+      alert("Product added to cart!");
     });
-  } else if (sort === "price-asc") {
-    results.sort(function (a, b) {
-      return getFinalPrice(a) - getFinalPrice(b);
-    });
-  } else if (sort === "price-desc") {
-    results.sort(function (a, b) {
-      return getFinalPrice(b) - getFinalPrice(a);
-    });
-  } else if (sort === "released-desc") {
-    results.sort(function (a, b) {
-      return (b.released || "").localeCompare(a.released || "");
-    });
-  }
+  });
 
-  let html = "<section>";
-  html += '<p class="subtext">' + results.length + " results</p>";
+  // Sorting
+  if (sort === "title")
+    results.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+  else if (sort === "price-asc")
+    results.sort((a, b) => getFinalPrice(a) - getFinalPrice(b));
+  else if (sort === "price-desc")
+    results.sort((a, b) => getFinalPrice(b) - getFinalPrice(a));
+  else if (sort === "released-desc")
+    results.sort((a, b) => (b.released || "").localeCompare(a.released || ""));
 
-  if (results.length === 0) {
-    html += '<div class="status">No items found.</div>';
-  } else {
-    html += '<div class="grid">';
-    for (let i = 0; i < results.length; i++) {
-      html += createCard(results[i]);
-    }
-    html += "</div>";
-  }
+  const htmlContent =
+    results.length === 0
+      ? `<div class="status">No items found.</div>`
+      : `<div class="grid">${results.map(createCard).join("")}</div>`;
 
-  html += "</section>";
-  app.innerHTML = html;
+  productList.innerHTML = `
+    <section>
+      <p class="subtext">${results.length} results</p>
+      ${htmlContent}
+    </section>
+  `;
 }
 
+/* --------------------- Initialize --------------------- */
 async function initCategories() {
-  const app = $("#app");
+  const productList = $("#product-list");
   const searchInput = $("#search");
   const sortSelect = $("#sort");
 
-  if (app) {
-    app.innerHTML = '<div class="status">Loading games…</div>';
-  }
+  if (productList)
+    productList.innerHTML = '<div class="status">Loading games…</div>';
 
   try {
-    allGames = await fetchAll();
-    buildGenreNav(allGames);
+    products = await fetchAll();
+    buildGenreNav(products);
+    buildAgeNav();
 
-    const params = getParams();
-    const initialGenre = (params.get("genre") || "").toLowerCase();
+    // Set first button active by default
+    const firstGenre = $("#genre-nav .chip");
+    if (firstGenre) firstGenre.classList.add("active");
 
-    const chips = document.querySelectorAll("#genre-nav .chip");
-    let found = false;
+    const firstAge = $("#age-nav .chip");
+    if (firstAge) firstAge.classList.add("active");
 
-    for (let i = 0; i < chips.length; i++) {
-      const chipGenre = (chips[i].dataset.genre || "").toLowerCase();
-      if (chipGenre === initialGenre) {
-        chips[i].classList.add("active");
-        found = true;
-        break;
-      }
-    }
-
-    if (!found && chips.length > 0) {
-      chips[0].classList.add("active");
-    }
-
-    if (searchInput) {
-      searchInput.addEventListener("input", renderList);
-    }
-    if (sortSelect) {
-      sortSelect.addEventListener("change", renderList);
-    }
+    searchInput?.addEventListener("input", renderList);
+    sortSelect?.addEventListener("change", renderList);
 
     renderList();
   } catch (error) {
-    if (app) {
-      app.innerHTML =
-        '<div class="status error">' +
-        (error.message || "Failed to load") +
-        " — please try again.</div>";
+    if (productList) {
+      productList.innerHTML = `<div class="status error">${
+        error.message || "Failed to load"
+      } — please try again.</div>`;
     }
   }
 }
