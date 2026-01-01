@@ -507,23 +507,58 @@ h1 {
   color: rgb(199, 107, 241);
 }
 
+.backbtn {
+  padding: 10px 20px;
+  background-color: rgb(199, 107, 241);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.confirmation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers all child elements horizontally */
+  gap: 2rem; /* optional: space between elements */
+  padding: 2rem; /* optional padding around content */
+}
+
+.backbtn:hover {
+  background-color: rgb(134, 96, 240);
+}
+.confirmation-card p {
+  color: #c5c5c5;
+}
+.confirmation-card-item {
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+}
+
+.confirmation-card-item:hover {
+  transform: none;
+  box-shadow: none;
+  cursor: default;
+}
+
+.confirmation-card-item .cart-buttons {
+  display: none;
+}
+
+.order-items {
+  color: #c5c5c5;
+}
+
+.your-purchase {
+  color: #c5c5c5;
+}
 /* ===============================
    Confirmation Button
 ================================ */
 
-/* ===============================
-   Responsive
-================================ */
-
-@media (max-width: 600px) {
-  .confirmation-card {
-    padding: 20px;
-  }
-
-  .confirmation-title {
-    font-size: 1.5rem;
-  }
-}
 /* ===============================
    Checkout layout
 ================================ */
@@ -596,9 +631,11 @@ h1 {
 /* Helper text (gift email etc.) */
 .checkout__field small {
   color: rgb(199, 107, 241);
+  padding-top: 10px;
 }
 
-/* Responsive */
+/* Responsiveness */
+
 @media (max-width: 700px) {
   .cart-card {
     flex-direction: column;
@@ -612,6 +649,13 @@ h1 {
 
   #cart-summary {
     text-align: left;
+  }
+  .confirmation-card {
+    padding: 20px;
+  }
+
+  .confirmation-title {
+    font-size: 1.5rem;
   }
 }
 

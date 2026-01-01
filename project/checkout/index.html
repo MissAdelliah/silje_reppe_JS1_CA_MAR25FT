@@ -35,7 +35,7 @@
               <h2>Customer Information</h2>
 
               <div class="checkout__field">
-                <label for="fullname">Full name</label>
+                <label for="fullname">Full name *</label>
                 <input
                   id="fullname"
                   type="text"
@@ -45,7 +45,7 @@
               </div>
 
               <div class="checkout__field">
-                <label for="email">Email</label>
+                <label for="email">Email *</label>
                 <input
                   id="email"
                   type="email"
@@ -55,19 +55,19 @@
               </div>
 
               <div class="checkout__field">
-                <label for="address">Address</label>
-                <input id="address" type="text" placeholder="" />
+                <label for="address">Address *</label>
+                <input id="address" type="text" placeholder="Trondheimsvegen" />
               </div>
 
               <div class="checkout__row">
                 <div class="checkout__field">
-                  <label for="city">City</label>
-                  <input id="city" type="text" required />
+                  <label for="city">City *</label>
+                  <input id="city" type="text" placeholder="Oslo" />
                 </div>
 
                 <div class="checkout__field">
-                  <label for="postal">Postal Code</label>
-                  <input id="postal" type="text" required />
+                  <label for="postal">Postal Code *</label>
+                  <input id="postal" type="text" placeholder="0000" />
                 </div>
               </div>
             </section>
@@ -77,33 +77,47 @@
               <h2>Gift (optional)</h2>
 
               <div class="checkout__field">
-                <label for="gift-email">Send gift to email</label>
+                <label for="gift-email">Buy as gift</label>
                 <input
                   id="gift-email"
                   type="email"
                   placeholder="friend@mail.vom"
                 />
-                <small>If filled, the order will be sent as a gift</small>
+                <small>If filled, the game will be sent to this mail</small>
               </div>
             </section>
 
             <!-- PAYMENT -->
             <section class="checkout-form">
               <h2>Payment Details</h2>
+              <div class="checkout__field">
+                <label for="fullname-card">Full name *</label>
+                <input
+                  id="fullname-card"
+                  type="text"
+                  placeholder="Silje Andrea Reppe"
+                  required
+                />
+              </div>
 
               <div class="checkout__field">
-                <label for="card">Card Number</label>
-                <input id="card" type="text" required />
+                <label for="card">Card Number *</label>
+                <input
+                  id="card"
+                  type="text"
+                  placeholder="1234 5678 9123 4567"
+                  required
+                />
               </div>
 
               <div class="checkout__row">
                 <div class="checkout__field small">
-                  <label for="expire">Expire</label>
+                  <label for="expire">Expire *</label>
                   <input id="expire" type="text" placeholder="MM/YY" required />
                 </div>
 
                 <div class="checkout__field small">
-                  <label for="cvc">CVC</label>
+                  <label for="cvc">CVC *</label>
                   <input id="cvc" type="text" placeholder="123" required />
                 </div>
               </div>
