@@ -22,56 +22,93 @@
         </nav>
       </div>
     </header>
-
     <main class="wrap">
       <h1 class="header-title">Your Cart</h1>
       <section id="cart-items" class="container-home">
-        <!-- Cart products dynamically injected here -->
+        Cart products dynamically injected here
       </section>
-      <section id="checkout-forms" class="checkout-forms">
-        <form id="customer-form" class="checkout-form">
-          <h2>Customer Information</h2>
-          <label>
-            <label>
-              Full name
-              <input type="name" placeholder="Silje Andrea Reppe" required />
-            </label>
-            Email
-            <input type="email" placeholder="siljevanilje@mail.vom" required />
-          </label>
-          <label>
-            Address
-            <input type="text" placeholder="100 meter forest" required />
-          </label>
-          <label>
-            City
-            <input type="text" placeholder="London" required />
-          </label>
-          <label>
-            Postal Code
-            <input type="text" placeholder="6543" required />
-          </label>
-        </form>
-        <form id="payment-form" class="checkout-form">
-          <h2>Payment Details</h2>
-          <label>
-            Card Number
-            <input type="text" placeholder="1234 5678 9012 3456" required />
-          </label>
-          <label class="row">
-            <span>
-              Expire
-              <input type="text" placeholder="MM/YY" required />
-            </span>
-            <span>
-              CVC
-              <input type="text" placeholder="123" required />
-            </span>
-          </label>
-          <!--
-    <button type="submit" class="button-confirm">
-      Complete Purchase
-    </button> -->
+      <section class="checkout">
+        <form id="checkout-form" class="checkout__form" novalidate>
+          <section class="checkout-forms">
+            <!-- CUSTOMER INFO -->
+            <section class="checkout-form">
+              <h2>Customer Information</h2>
+
+              <div class="checkout__field">
+                <label for="fullname">Full name</label>
+                <input
+                  id="fullname"
+                  type="text"
+                  placeholder="Silje Andrea Reppe"
+                  required
+                />
+              </div>
+
+              <div class="checkout__field">
+                <label for="email">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="silje@mail.vom"
+                  required
+                />
+              </div>
+
+              <div class="checkout__field">
+                <label for="address">Address</label>
+                <input id="address" type="text" placeholder="" />
+              </div>
+
+              <div class="checkout__row">
+                <div class="checkout__field">
+                  <label for="city">City</label>
+                  <input id="city" type="text" required />
+                </div>
+
+                <div class="checkout__field">
+                  <label for="postal">Postal Code</label>
+                  <input id="postal" type="text" required />
+                </div>
+              </div>
+            </section>
+
+            <!-- GIFT OPTION -->
+            <section class="checkout-form">
+              <h2>Gift (optional)</h2>
+
+              <div class="checkout__field">
+                <label for="gift-email">Send gift to email</label>
+                <input
+                  id="gift-email"
+                  type="email"
+                  placeholder="friend@mail.vom"
+                />
+                <small>If filled, the order will be sent as a gift</small>
+              </div>
+            </section>
+
+            <!-- PAYMENT -->
+            <section class="checkout-form">
+              <h2>Payment Details</h2>
+
+              <div class="checkout__field">
+                <label for="card">Card Number</label>
+                <input id="card" type="text" required />
+              </div>
+
+              <div class="checkout__row">
+                <div class="checkout__field small">
+                  <label for="expire">Expire</label>
+                  <input id="expire" type="text" placeholder="MM/YY" required />
+                </div>
+
+                <div class="checkout__field small">
+                  <label for="cvc">CVC</label>
+                  <input id="cvc" type="text" placeholder="123" required />
+                </div>
+              </div>
+            </section>
+          </section>
         </form>
       </section>
       <div id="cart-summary" class="container-home">
@@ -79,7 +116,6 @@
         <button id="checkout-btn" class="button-add">Confirm order</button>
       </div>
     </main>
-
     <footer class="footer">
       <div class="website__rights">
         <p>Terms & conditions</p>

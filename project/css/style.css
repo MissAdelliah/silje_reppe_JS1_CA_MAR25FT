@@ -511,30 +511,6 @@ h1 {
    Confirmation Button
 ================================ */
 
-.button-confirm {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 22px;
-
-  background-color: rgb(199, 107, 241);
-  color: #ffffff;
-
-  border: none;
-  border-radius: 8px;
-
-  font-size: 1rem;
-  font-weight: 500;
-  text-decoration: none;
-
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.button-confirm:hover {
-  background-color: rgb(134, 96, 240);
-  transform: translateY(-1px);
-}
-
 /* ===============================
    Responsive
 ================================ */
@@ -548,55 +524,78 @@ h1 {
     font-size: 1.5rem;
   }
 }
-/* forms*/
 /* ===============================
-   Checkout Forms
+   Checkout layout
 ================================ */
 
-.checkout-forms {
-  margin-top: 30px;
-  display: grid;
-  gap: 25px;
+.checkout {
+  margin-top: 40px;
 }
 
+.checkout__form,
+.checkout-forms {
+  display: grid;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* ===============================
+   Checkout sections / cards
+================================ */
+
+.checkout__section,
 .checkout-form {
   background: rgb(41, 39, 41);
   border: 2px solid #9e9d9d;
   border-radius: 12px;
-
   padding: 20px;
 }
 
+/* Optional if you keep fieldset */
+.checkout__section legend {
+  padding: 0 10px;
+  color: rgb(199, 107, 241);
+  font-weight: 600;
+}
+
+/* Section headings */
 .checkout-form h2 {
-  font-size: 1rem;
-  margin-bottom: 15px;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
   color: rgb(197, 196, 197);
 }
 
-.checkout-form label {
+/* ===============================
+   Form groups
+================================ */
+
+.checkout__field {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 10px;
-  font-size: 1rem;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.checkout__field label {
+  font-size: 0.95rem;
   color: #cfcfcf;
 }
 
-.checkout-form input {
+.checkout__field input {
   padding: 8px 10px;
   border-radius: 6px;
   border: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
-.checkout-form input:focus {
-  border: 5px solid rgb(199, 107, 241);
+/* Small inputs (expire / cvc / postal) */
+.checkout__field.small input {
+  max-width: 120px;
 }
 
-.checkout-form .row {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
+/* Helper text (gift email etc.) */
+.checkout__field small {
+  color: rgb(199, 107, 241);
 }
 
 /* Responsive */
