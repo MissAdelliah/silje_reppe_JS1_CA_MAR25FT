@@ -142,7 +142,7 @@ function createCard(item) {
   const imgAlt = item.image?.alt || title;
 
   return `
-    <a class="card-link" href="/project/product/index.html?id=${encodeURIComponent(
+    <a class="card-link" href="./project/product/index.html?id=${encodeURIComponent(
       productId
     )}">
       <article class="card" aria-labelledby="card-title-${productId}">
