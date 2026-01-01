@@ -398,7 +398,7 @@ h1 {
 }
 
 .cart-card .remove-btn:hover {
-  background-color: pink;
+  background-color: rgb(199, 107, 241);
 }
 
 /* Cart summary */
@@ -445,7 +445,197 @@ h1 {
   padding: 20px;
 }
 
-/* Responsive */
+/* confirmation*/
+/* ===============================
+   Confirmation Page Layout
+================================ */
+
+.confirmation-page {
+  min-height: calc(100vh - 160px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmation-card {
+  max-width: 520px;
+  width: 100%;
+  padding: 30px;
+
+  background: rgb(41, 39, 41);
+  border: 2px solid #9e9d9d;
+  border-radius: 14px;
+
+  text-align: center;
+}
+
+/* ===============================
+   Typography
+================================ */
+
+.confirmation-title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: rgb(199, 107, 241);
+}
+
+.confirmation-text {
+  font-size: 1rem;
+  color: #cfcfcf;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.confirmation-order {
+  margin: 20px 0;
+  padding: 12px;
+
+  background: rgb(55, 52, 55);
+  border-radius: 10px;
+  color: #c5c5c5;
+
+  font-size: 0.95rem;
+}
+
+/* ===============================
+   Icon / Visual
+================================ */
+
+.confirmation-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: rgb(199, 107, 241);
+}
+
+.backbtn {
+  padding: 10px 20px;
+  background-color: rgb(199, 107, 241);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.confirmation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers all child elements horizontally */
+  gap: 2rem; /* optional: space between elements */
+  padding: 2rem; /* optional padding around content */
+}
+
+.backbtn:hover {
+  background-color: rgb(134, 96, 240);
+}
+.confirmation-card p {
+  color: #c5c5c5;
+}
+.confirmation-card-item {
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+}
+
+.confirmation-card-item:hover {
+  transform: none;
+  box-shadow: none;
+  cursor: default;
+}
+
+.confirmation-card-item .cart-buttons {
+  display: none;
+}
+
+.order-items {
+  color: #c5c5c5;
+}
+
+.your-purchase {
+  color: #c5c5c5;
+}
+/* ===============================
+   Confirmation Button
+================================ */
+
+/* ===============================
+   Checkout layout
+================================ */
+
+.checkout {
+  margin-top: 40px;
+}
+
+.checkout__form,
+.checkout-forms {
+  display: grid;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* ===============================
+   Checkout sections / cards
+================================ */
+
+.checkout__section,
+.checkout-form {
+  background: rgb(41, 39, 41);
+  border: 2px solid #9e9d9d;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* Optional if you keep fieldset */
+.checkout__section legend {
+  padding: 0 10px;
+  color: rgb(199, 107, 241);
+  font-weight: 600;
+}
+
+/* Section headings */
+.checkout-form h2 {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: rgb(197, 196, 197);
+}
+
+/* ===============================
+   Form groups
+================================ */
+
+.checkout__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.checkout__field label {
+  font-size: 0.95rem;
+  color: #cfcfcf;
+}
+
+.checkout__field input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.95rem;
+}
+
+/* Small inputs (expire / cvc / postal) */
+.checkout__field.small input {
+  max-width: 120px;
+}
+
+/* Helper text (gift email etc.) */
+.checkout__field small {
+  color: rgb(199, 107, 241);
+  padding-top: 10px;
+}
+
+/* Responsiveness */
+
 @media (max-width: 700px) {
   .cart-card {
     flex-direction: column;
@@ -459,6 +649,13 @@ h1 {
 
   #cart-summary {
     text-align: left;
+  }
+  .confirmation-card {
+    padding: 20px;
+  }
+
+  .confirmation-title {
+    font-size: 1.5rem;
   }
 }
 

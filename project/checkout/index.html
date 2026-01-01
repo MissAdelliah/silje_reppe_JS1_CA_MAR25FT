@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart / Checkout</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script type="module" src="../js/cart.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="wrap row row-between">
+        <div class="logo">
+          <a href="/project/">GAMEHUB</a>
+        </div>
+        <nav class="nav_categories" aria-label="Main navigation">
+          <a href="../checkout/" class="links cart-link">
+            CART
+            <span id="items-count-cart">0</span>
+            <span class="cart-indicator" aria-hidden="true"></span>
+          </a>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <h1 class="header-title">Your Cart</h1>
+      <section id="cart-items" class="container-home">
+        Cart products dynamically injected here
+      </section>
+      <section class="checkout">
+        <form id="checkout-form" class="checkout__form" novalidate>
+          <section class="checkout-forms">
+            <!-- CUSTOMER INFO -->
+            <section class="checkout-form">
+              <h2>Customer Information</h2>
+
+              <div class="checkout__field">
+                <label for="fullname">Full name *</label>
+                <input
+                  id="fullname"
+                  type="text"
+                  placeholder="Silje Andrea Reppe"
+                  required
+                />
+              </div>
+
+              <div class="checkout__field">
+                <label for="email">Email *</label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="silje@mail.vom"
+                  required
+                />
+              </div>
+
+              <div class="checkout__field">
+                <label for="address">Address *</label>
+                <input id="address" type="text" placeholder="Trondheimsvegen" />
+              </div>
+
+              <div class="checkout__row">
+                <div class="checkout__field">
+                  <label for="city">City *</label>
+                  <input id="city" type="text" placeholder="Oslo" />
+                </div>
+
+                <div class="checkout__field">
+                  <label for="postal">Postal Code *</label>
+                  <input id="postal" type="text" placeholder="0000" />
+                </div>
+              </div>
+            </section>
+
+            <!-- GIFT OPTION -->
+            <section class="checkout-form">
+              <h2>Gift (optional)</h2>
+
+              <div class="checkout__field">
+                <label for="gift-email">Buy as gift</label>
+                <input
+                  id="gift-email"
+                  type="email"
+                  placeholder="friend@mail.vom"
+                />
+                <small>If filled, the game will be sent to this mail</small>
+              </div>
+            </section>
+
+            <!-- PAYMENT -->
+            <section class="checkout-form">
+              <h2>Payment Details</h2>
+              <div class="checkout__field">
+                <label for="fullname-card">Full name *</label>
+                <input
+                  id="fullname-card"
+                  type="text"
+                  placeholder="Silje Andrea Reppe"
+                  required
+                />
+              </div>
+
+              <div class="checkout__field">
+                <label for="card">Card Number *</label>
+                <input
+                  id="card"
+                  type="text"
+                  placeholder="1234 5678 9123 4567"
+                  required
+                />
+              </div>
+
+              <div class="checkout__row">
+                <div class="checkout__field small">
+                  <label for="expire">Expire *</label>
+                  <input id="expire" type="text" placeholder="MM/YY" required />
+                </div>
+
+                <div class="checkout__field small">
+                  <label for="cvc">CVC *</label>
+                  <input id="cvc" type="text" placeholder="123" required />
+                </div>
+              </div>
+            </section>
+          </section>
+        </form>
+      </section>
+      <div id="cart-summary" class="container-home">
+        <p>Total: <span id="cart-total">0.00</span> NOK</p>
+        <button id="checkout-btn" class="button-add">Confirm order</button>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="website__rights">
+        <p>Terms & conditions</p>
+        <p class="website__rights--text">&copy; 2025 GAMEHUB</p>
+      </div>
+    </footer>
+  </body>
+</html>

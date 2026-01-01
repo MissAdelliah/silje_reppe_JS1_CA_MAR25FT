@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>order Confirmed</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <script type="module" src="../../js/confirmation.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="wrap row row-between">
+        <div class="logo"><a href="/project/">GAMEHUB</a></div>
+      </div>
+    </header>
+    <main class="confirmation-container">
+      <div class="confirmation-card">
+        <h1>Thank you!</h1>
+        <p class="confirmation-message"><b>Your purchase was successful</b></p>
+        <p class="order-info">order reference: <span id="order-id"></span></p>
+        <p>Confirmation also sent to your Mail</p>
+        <a href="/project/" class="backbtn"> Back to store </a>
+      </div>
+      <div class="your-purchase">
+        <h2>Your purchase</h2>
+      </div>
+
+      <div id="order-items"></div>
+
+      <!-- Total price -->
+      <p id="order-total"></p>
+    </main>
+    <footer class="footer">
+      <div class="website__rights">
+        <p>Terms & conditions</p>
+        <p class="website__rights--text">&copy; 2025 GAMEHUB</p>
+      </div>
+    </footer>
+  </body>
+</html>
