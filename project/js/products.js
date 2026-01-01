@@ -3,6 +3,41 @@ import { fetchAll } from "./api.js";
 import { addToCart } from "./cart.js";
 
 let products = [];
+/* --------------------- Initialize --------------------- */
+async function initCategories() {
+  const productList = $("#product-list");
+  const searchInput = $("#search");
+  const sortSelect = $("#sort");
+
+  if (productList)
+    productList.innerHTML = '<div class="status">Loading games…</div>';
+
+  try {
+    products = await fetchAll();
+    buildGenreNav(products);
+    buildAgeNav();
+
+    // Set first button active by default
+    const firstGenre = $("#genre-nav .chip");
+    if (firstGenre) firstGenre.classList.add("active");
+
+    const firstAge = $("#age-nav .chip");
+    if (firstAge) firstAge.classList.add("active");
+
+    searchInput?.addEventListener("input", renderList);
+    sortSelect?.addEventListener("change", renderList);
+
+    renderList();
+  } catch (error) {
+    if (productList) {
+      productList.innerHTML = `<div class="status error">${
+        error.message || "Failed to load"
+      } — please try again.</div>`;
+    }
+  }
+}
+
+window.addEventListener("DOMContentLoaded", initCategories);
 
 /* --------------------- Genre Navigation --------------------- */
 function buildGenreNav(items) {
@@ -187,39 +222,3 @@ function renderList() {
     </section>
   `;
 }
-
-/* --------------------- Initialize --------------------- */
-async function initCategories() {
-  const productList = $("#product-list");
-  const searchInput = $("#search");
-  const sortSelect = $("#sort");
-
-  if (productList)
-    productList.innerHTML = '<div class="status">Loading games…</div>';
-
-  try {
-    products = await fetchAll();
-    buildGenreNav(products);
-    buildAgeNav();
-
-    // Set first button active by default
-    const firstGenre = $("#genre-nav .chip");
-    if (firstGenre) firstGenre.classList.add("active");
-
-    const firstAge = $("#age-nav .chip");
-    if (firstAge) firstAge.classList.add("active");
-
-    searchInput?.addEventListener("input", renderList);
-    sortSelect?.addEventListener("change", renderList);
-
-    renderList();
-  } catch (error) {
-    if (productList) {
-      productList.innerHTML = `<div class="status error">${
-        error.message || "Failed to load"
-      } — please try again.</div>`;
-    }
-  }
-}
-
-window.addEventListener("DOMContentLoaded", initCategories);
