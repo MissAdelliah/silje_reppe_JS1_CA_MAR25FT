@@ -78,7 +78,7 @@ main.wrap {
 
 .search input[type="search"] {
   min-width: 230px;
-  max-width: 300px; /* optional, keeps input from stretching too much */
+  max-width: 300px;
   background: rgb(41, 39, 41);
   border: 2px solid rgb(199, 107, 241);
   padding: 6px 10px;
@@ -93,7 +93,6 @@ main.wrap {
   border-color: rgb(199, 107, 241);
 }
 
-/* Hidden label */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -325,7 +324,6 @@ a.chip {
 .status.error {
   color: rgb(245, 100, 100);
 }
-/* ------------------ Cart Page ------------------ */
 
 h1 {
   font-size: 2rem;
@@ -401,7 +399,6 @@ h1 {
   background-color: rgb(199, 107, 241);
 }
 
-/* Cart summary */
 #cart-summary {
   display: flex;
   justify-content: space-between;
@@ -437,18 +434,12 @@ h1 {
   transform: translateY(-2px);
 }
 
-/* Empty cart message */
 #cart-items .status {
   font-size: 1rem;
   color: rgb(221, 221, 221);
   text-align: center;
   padding: 20px;
 }
-
-/* confirmation*/
-/* ===============================
-   Confirmation Page Layout
-================================ */
 
 .confirmation-page {
   min-height: calc(100vh - 160px);
@@ -468,10 +459,6 @@ h1 {
 
   text-align: center;
 }
-
-/* ===============================
-   Typography
-================================ */
 
 .confirmation-title {
   font-size: 2rem;
@@ -497,10 +484,6 @@ h1 {
   font-size: 0.95rem;
 }
 
-/* ===============================
-   Icon / Visual
-================================ */
-
 .confirmation-icon {
   font-size: 3rem;
   margin-bottom: 15px;
@@ -521,9 +504,9 @@ h1 {
 .confirmation-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* centers all child elements horizontally */
-  gap: 2rem; /* optional: space between elements */
-  padding: 2rem; /* optional padding around content */
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
 }
 
 .backbtn:hover {
@@ -555,13 +538,6 @@ h1 {
 .your-purchase {
   color: #c5c5c5;
 }
-/* ===============================
-   Confirmation Button
-================================ */
-
-/* ===============================
-   Checkout layout
-================================ */
 
 .checkout {
   margin-top: 40px;
@@ -574,10 +550,6 @@ h1 {
   margin-top: 30px;
 }
 
-/* ===============================
-   Checkout sections / cards
-================================ */
-
 .checkout__section,
 .checkout-form {
   background: rgb(41, 39, 41);
@@ -586,23 +558,17 @@ h1 {
   padding: 20px;
 }
 
-/* Optional if you keep fieldset */
 .checkout__section legend {
   padding: 0 10px;
   color: rgb(199, 107, 241);
   font-weight: 600;
 }
 
-/* Section headings */
 .checkout-form h2 {
   font-size: 1.1rem;
   margin-bottom: 20px;
   color: rgb(197, 196, 197);
 }
-
-/* ===============================
-   Form groups
-================================ */
 
 .checkout__field {
   display: flex;
@@ -623,18 +589,16 @@ h1 {
   font-size: 0.95rem;
 }
 
-/* Small inputs (expire / cvc / postal) */
 .checkout__field.small input {
   max-width: 120px;
 }
 
-/* Helper text (gift email etc.) */
 .checkout__field small {
   color: rgb(199, 107, 241);
   padding-top: 10px;
 }
 
-/* Responsiveness */
+/*** Responsiveness ***/
 
 @media (max-width: 700px) {
   .cart-card {
