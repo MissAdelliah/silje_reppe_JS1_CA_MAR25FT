@@ -1,28 +1,29 @@
-// confirmation.js
 window.addEventListener("DOMContentLoaded", () => {
-  // ----------------------- DOM ELEMENTS -----------------------
+  //Runs when page content is fully loaded
+  //DOM elements
   const orderIdEl = document.getElementById("order-id");
   const orderItemsContainer = document.getElementById("order-items");
   const orderTotalEl = document.getElementById("order-total");
 
-  // ----------------------- FETCH LAST order -----------------------
+  //Retrive resent order
   const lastorder = JSON.parse(localStorage.getItem("lastorder")) || [];
 
-  // ----------------------- GENERATE order NUMBER -----------------------
+  //Random order number generator
   function generateorderNumber() {
     return "ORD-" + Math.floor(Math.random() * 1000000);
   }
 
   if (orderIdEl) {
+    //Display number
     orderIdEl.textContent = generateorderNumber();
   }
 
-  // ----------------------- RENDER orderED ITEMS -----------------------
+  //Render each ordered item and calculate the total price
   if (lastorder.length && orderItemsContainer) {
     let total = 0;
 
     lastorder.forEach((item) => {
-      const itemTotal = (item.price * item.quantity).toFixed(2);
+      const itemTotal = (item.price * item.quantity).toFixed(2); //Calculate total price for single item
       total += Number(itemTotal);
 
       const div = document.createElement("div");
@@ -42,7 +43,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     if (orderTotalEl) {
-      orderTotalEl.textContent = `Total: NOK ${total.toFixed(2)}`;
+      orderTotalEl.textContent = `Total: NOK ${total.toFixed(2)}`; //Final price
     }
   } else {
     // If no order exists, show message
@@ -51,8 +52,4 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     if (orderTotalEl) orderTotalEl.textContent = "";
   }
-
-  // ----------------------- OPTIONAL: CLEAR LAST order -----------------------
-  // Only clear after rendering so user can see data if they reload
-  // localStorage.removeItem("lastorder");
 });

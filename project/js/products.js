@@ -3,7 +3,7 @@ import { fetchAll } from "./api.js";
 import { addToCart } from "./cart.js";
 
 let products = [];
-/* --------------------- Initialize --------------------- */
+
 async function initCategories() {
   const productList = $("#product-list");
   const searchInput = $("#search");
@@ -13,22 +13,23 @@ async function initCategories() {
     productList.innerHTML = '<div class="status">Loading games…</div>';
 
   try {
+    //Fetch all products by genre
     products = await fetchAll();
     buildGenreNav(products);
     buildAgeNav();
 
-    // Set first button active by default
     const firstGenre = $("#genre-nav .chip");
     if (firstGenre) firstGenre.classList.add("active");
 
     const firstAge = $("#age-nav .chip");
     if (firstAge) firstAge.classList.add("active");
-
+    //Search and sort eventlistener
     searchInput?.addEventListener("input", renderList);
     sortSelect?.addEventListener("change", renderList);
 
     renderList();
   } catch (error) {
+    //If fetching fails show error message
     if (productList) {
       productList.innerHTML = `<div class="status error">${
         error.message || "Failed to load"
@@ -36,10 +37,9 @@ async function initCategories() {
     }
   }
 }
-
+//Run init after DOM is loaded
 window.addEventListener("DOMContentLoaded", initCategories);
 
-/* --------------------- Genre Navigation --------------------- */
 function buildGenreNav(items) {
   const nav = $("#genre-nav");
   if (!nav) return;
@@ -75,7 +75,6 @@ function buildGenreNav(items) {
   genres.forEach((genre) => addChip(genre, genre));
 }
 
-/* --------------------- Age Navigation --------------------- */
 function buildAgeNav() {
   const nav = $("#age-nav");
   if (!nav) return;
@@ -104,7 +103,6 @@ function buildAgeNav() {
   addChip("Adult", "adult");
 }
 
-/* --------------------- Active Filters --------------------- */
 function getActiveGenre() {
   const active = $("#genre-nav .chip.active");
   return active ? (active.dataset.genre || "").toLowerCase() : "";
@@ -114,15 +112,13 @@ function getActiveAge() {
   const active = $("#age-nav .chip.active");
   return active ? active.dataset.age : "all";
 }
-
-/* --------------------- Price Helper --------------------- */
+//Returns the final price of a product, accounting for discounts
 function getFinalPrice(item) {
   return item.onSale
     ? Number(item.discountedPrice || 0)
     : Number(item.price || 0);
 }
 
-/* --------------------- Product Card --------------------- */
 function createCard(item) {
   const productId = item.id;
   const priceHTML = item.onSale
@@ -135,7 +131,7 @@ function createCard(item) {
     : `<span class="card__price-current">NOK ${Number(item.price).toFixed(
         2
       )}</span>`;
-
+  //Sort and displays the list of products based on search, genre, and age
   const title = item.title || "Untitled";
   const genre = item.genre || "–";
   const imgSrc = item.image?.url || "";
@@ -159,7 +155,6 @@ function createCard(item) {
   `;
 }
 
-/* --------------------- Render List --------------------- */
 function renderList() {
   const productList = $("#product-list");
   const searchInput = $("#search");
@@ -171,7 +166,7 @@ function renderList() {
   const selectedGenre = getActiveGenre();
   const activeAge = getActiveAge();
   const sort = sortSelect?.value || "relevance";
-
+  //Sort products based on search text, selected genre, and age
   const results = products.filter((game) => {
     const title = (game.title || "").toLowerCase();
     const desc = (game.description || "").toLowerCase();
@@ -181,11 +176,11 @@ function renderList() {
       !searchText || title.includes(searchText) || desc.includes(searchText);
     const matchesGenre = !selectedGenre || genre === selectedGenre;
 
-    // Age filtering
+    //Age filtering
     let matchesAge = true;
     const age = parseInt((game.ageRating || "").replace(/\D/g, "")) || 0;
-    if (activeAge === "kids") matchesAge = age < 18;
-    else if (activeAge === "adult") matchesAge = age >= 18;
+    if (activeAge === "kids") matchesAge = age < 18; //If under 18years
+    else if (activeAge === "adult") matchesAge = age >= 18; //If over 18years 'I would like to add a function where kids cant buy adult games'
 
     return matchesText && matchesGenre && matchesAge;
   });
@@ -200,7 +195,7 @@ function renderList() {
     });
   });
 
-  // Sorting
+  //Sorting based on user selection
   if (sort === "title")
     results.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
   else if (sort === "price-asc")
@@ -211,6 +206,7 @@ function renderList() {
     results.sort((a, b) => (b.released || "").localeCompare(a.released || ""));
 
   const htmlContent =
+    //Render products or show a message if no results
     results.length === 0
       ? `<div class="status">No items found.</div>`
       : `<div class="grid">${results.map(createCard).join("")}</div>`;

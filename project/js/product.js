@@ -3,7 +3,7 @@ import { fetchAll } from "./api.js";
 import { addToCart } from "./cart.js";
 
 let products = [];
-
+//Fetch and render single product on ID from URL
 async function renderProduct() {
   const details = $("#product-details");
   if (!details) return;
@@ -13,20 +13,22 @@ async function renderProduct() {
   const productId = params.get ? params.get("id") : params.id;
 
   if (!productId) {
+    //Message if no product ID is found
     details.innerHTML = `<div class="status">Product not found.</div>`;
     return;
   }
 
-  // Load all products if not already
+  // Load all products if not already and find current product
   if (products.length === 0) products = await fetchAll();
   const product = products.find((p) => String(p.id) === String(productId));
 
   if (!product) {
+    //Message if product dosen't exist
     details.innerHTML = `<div class="status">Product not found.</div>`;
     return;
   }
 
-  const priceHTML = product.onSale
+  const priceHTML = product.onSale //Prise and sale price
     ? `<span class="price-current">NOK ${Number(
         product.discountedPrice
       ).toFixed(2)}</span> 
@@ -37,7 +39,7 @@ async function renderProduct() {
         2
       )}</span>`;
 
-  // Insert product HTML
+  // Insert product card HTML
   details.innerHTML = `
     <div class="product-card">
       <img class="product-image" src="${product.image?.url || ""}" alt="${
@@ -66,5 +68,5 @@ async function renderProduct() {
     alert("Product added to cart!");
   });
 }
-
+//Run the render function when DOM is fully loaded
 document.addEventListener("DOMContentLoaded", renderProduct);
