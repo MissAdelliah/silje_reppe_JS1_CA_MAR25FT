@@ -15,6 +15,8 @@ This is e-commerse game store
 ## Improvements to be made, bugs
 
 - Duplicated cart logic
+- wanted a purple border when clicked on form did not work as intended, so removed it
+- Form is compromised by something unknon, i got it smaller but its either to big or small, cant ajust as pleased. Someting with the display flex and justify content. i think.
 
 ## used
 
