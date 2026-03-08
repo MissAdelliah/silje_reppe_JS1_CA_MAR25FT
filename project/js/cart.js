@@ -1,106 +1,116 @@
-import { fetchAll } from "./api.js"; //Fetching all products from the API
+import { fetchAll } from './api.js';
 
-const cartKey = "cart"; //Store and retrive cart data
-//DOM elements to display and control
-const cartItemsContainer = document.getElementById("cart-items");
-const cartCount = document.getElementById("items-count-cart");
-const cartLink = document.querySelector(".cart-link");
-const cartTotalEl = document.getElementById("cart-total");
-const checkoutBtn = document.getElementById("checkout-btn");
-const checkoutForm = document.getElementById("checkout-form");
-const checkoutInputs = document.querySelectorAll("#checkout-form input");
-//Loads saved cart data localStorage or init an empty cart
+const cartKey = 'cart';
+
+// DOM elements
+const cartItemsContainer = document.getElementById('cart-items');
+const cartCount = document.getElementById('items-count-cart');
+const cartLink = document.querySelector('.cart-link');
+const cartTotalEl = document.getElementById('cart-total');
+const checkoutBtn = document.getElementById('checkout-btn');
+const checkoutForm = document.getElementById('checkout-form');
+const checkoutInputs = document.querySelectorAll('#checkout-form input');
+
+// Cart data
 let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 let products = [];
 
-//Init the cart by fetch products, updating
+// Init cart
 async function initCart() {
   products = await fetchAll();
   renderCart();
   updateCartUI();
   setupCheckout();
+  setupCheckoutInputs();
 }
 
-//Saves current cart state to lockalStore and refreses the cart
+// Save cart
 function saveCart() {
   localStorage.setItem(cartKey, JSON.stringify(cart));
   updateCartUI();
 }
 
+// Update cart UI
 function updateCartUI() {
-  //Updates cart related UI elements
-  const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0); //Calculates amount of items in cart, sum up quantities
-  if (cartCount) cartCount.textContent = totalItems; //Updates the cart item count if exsist
+  const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+
+  if (cartCount) cartCount.textContent = totalItems;
+
   if (cartLink) {
-    totalItems > 0
-      ? cartLink.classList.add("has-items") //Adds items
-      : cartLink.classList.remove("has-items"); //removes items
+    if (totalItems > 0) cartLink.classList.add('has-items');
+    else cartLink.classList.remove('has-items');
   }
+
   const total = cart.reduce(
-    //Calc total cart price
-    (sum, item) => sum + (item.price || 0) * (item.quantity || 0), //multiplying item price with quantity
-    0
+    (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
+    0,
   );
+
   if (cartTotalEl) cartTotalEl.textContent = total.toFixed(2);
 }
 
+// Render cart
 function renderCart() {
-  //Renders the cart content or shows emty state if no items
   if (!cartItemsContainer) return;
+
   if (cart.length === 0) {
-    cartItemsContainer.innerHTML = `<div class="status">Your cart is empty.</div>`; //Display message if empty
+    cartItemsContainer.innerHTML = `<div class="status">Your cart is empty.</div>`;
     return;
   }
 
-  //Renders cart items by generating HTML from the cart array
   cartItemsContainer.innerHTML = cart
     .map(
       (item) => `
-    <div class="card cart-card" data-id="${item.id}">
-      <img class="thumb" src="${item.image?.url || ""}" alt="${item.title}" />
-      <div class="pad">
-        <h2 class="title">${item.title}</h2>
-        <p class="price">NOK ${item.price.toFixed(2)} x ${item.quantity}</p>
-        <div class="cart-buttons">
-          <button class="button-add increase-btn">+</button>
-          <button class="button-add remove-btn">Remove</button>
+        <div class="card cart-card" data-id="${item.id}">
+          <img class="thumb" src="${item.image?.url || ''}" alt="${item.title}" />
+          <div class="pad">
+            <h2 class="title">${item.title}</h2>
+            <p class="price">NOK ${item.price.toFixed(2)} x ${item.quantity}</p>
+            <div class="cart-buttons">
+              <button class="button-add increase-btn">+</button>
+              <button class="button-add remove-btn">Remove</button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  `
+      `,
     )
-    .join("");
+    .join('');
 
-  //Click events to cart button
-  cartItemsContainer
-    .querySelectorAll(".increase-btn")
-    .forEach((btn) =>
-      btn.addEventListener("click", (e) => changeQuantity(e, 1))
-    );
-  cartItemsContainer
-    .querySelectorAll(".remove-btn")
-    .forEach((btn) =>
-      btn.addEventListener("click", (e) => changeQuantity(e, -1))
-    );
+  cartItemsContainer.querySelectorAll('.increase-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => changeQuantity(e, 1));
+  });
+
+  cartItemsContainer.querySelectorAll('.remove-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => changeQuantity(e, -1));
+  });
 }
 
-//Updates the quantity of cart item, removees if quanitity reach 0
+// Change quantity
 function changeQuantity(e, delta) {
-  const card = e.target.closest(".cart-card");
+  const card = e.target.closest('.cart-card');
+  if (!card) return;
+
   const id = card.dataset.id;
-  const cartItem = cart.find((p) => String(p.id) === id);
+  const cartItem = cart.find((item) => String(item.id) === String(id));
   if (!cartItem) return;
+
   cartItem.quantity += delta;
-  if (cartItem.quantity <= 0) cart = cart.filter((p) => String(p.id) !== id); //If quanitity is 0 or less, removes item from cart
+
+  if (cartItem.quantity <= 0) {
+    cart = cart.filter((item) => String(item.id) !== String(id));
+  }
+
   saveCart();
   renderCart();
 }
 
+// Add product to cart
 export function addToCart(product) {
-  // Add to cart and increase quantity
-  const existing = cart.find((p) => String(p.id) === String(product.id));
-  if (existing) existing.quantity += 1;
-  else
+  const existing = cart.find((item) => String(item.id) === String(product.id));
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
     cart.push({
       id: product.id,
       title: product.title,
@@ -108,107 +118,126 @@ export function addToCart(product) {
       image: product.image,
       quantity: 1,
     });
+  }
+
   saveCart();
   renderCart();
 }
 
+// Validate one field
 function validateField(field) {
-  // Validations forms
   const value = field.value.trim();
   let valid = true;
 
-  if (field.required && !value) valid = false; //Required field
-  else if (field.type === "email")
-    valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); //Expressions
-
-  if (field.id === "gift-email" && value === "") {
-    //Customer can give game as a gift to this email 'I would like to add more functions here'
-    valid = true; // empty gift email is valid
-  } else if (field.required && !value) {
+  if (field.id === 'gift-email' && value === '') {
+    valid = true;
+  } else if (field.required && value === '') {
     valid = false;
-  } else if (field.type === "email") {
-    valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); //Expressions
+  } else if (
+    (field.type === 'email' || field.id === 'gift-email') &&
+    value !== ''
+  ) {
+    valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
 
-  // Apply border stryling 'I got lost trying to do a on click event to make the border purple when clicking field in form'
-  if (field === document.activeElement) field.style.border = "2px solid purple";
-  else field.style.border = valid ? "2px solid green" : "2px solid red"; //green vailid, red for errors
+  // only show red/green when field is not focused
+  if (document.activeElement !== field) {
+    field.style.border = valid ? '2px solid green' : '2px solid red';
+  }
 
   return valid;
 }
 
+// Validate full form
 function validateForm(form) {
+  if (!form) return false;
+
   let isValid = true;
-  form.querySelectorAll("input").forEach((input) => {
+
+  form.querySelectorAll('input').forEach((input) => {
     if (!validateField(input)) isValid = false;
   });
+
   return isValid;
 }
 
-checkoutForm?.querySelectorAll("input").forEach((input) => {
-  input.addEventListener("input", () => validateField(input));
-  input.addEventListener(
-    "focus",
-    () => (input.style.border = "2px solid purple")
-  );
-  input.addEventListener("blur", () => validateField(input));
-});
+// Setup input listeners
+function setupCheckoutInputs() {
+  if (!checkoutForm) return;
 
-// Restricting input formats for payment fields
-checkoutForm?.querySelectorAll("input").forEach((input) => {
-  // Numeric-only inputs
-  if (input.id === "cvc" || input.id === "card") {
-    input.setAttribute("maxlength", input.id === "cvc" ? 3 : 16);
-    input.addEventListener("input", () => {
-      input.value = input.value.replace(/\D/g, "");
+  checkoutInputs.forEach((input) => {
+    input.addEventListener('blur', () => {
       validateField(input);
     });
-  }
 
-  // Expire: MM/YY, allow numbers and "/" 'I would like to add a function where it sets a "/" after two didgets
-  if (input.id === "expire") {
-    input.setAttribute("maxlength", 5); //Max 5, 00000
-    input.addEventListener("input", () => {
-      input.value = input.value.toUpperCase().replace(/[^0-9/]/g, "");
-      validateField(input);
-    });
-  }
-});
+    // card and cvc = numbers only
+    if (input.id === 'cvc' || input.id === 'card') {
+      input.setAttribute('maxlength', input.id === 'cvc' ? '3' : '16');
 
+      input.addEventListener('input', () => {
+        input.value = input.value.replace(/\D/g, '');
+      });
+    }
+
+    // expiry = MM/YY
+    if (input.id === 'expire') {
+      input.setAttribute('maxlength', '5');
+
+      input.addEventListener('input', () => {
+        let value = input.value.replace(/\D/g, '').slice(0, 4);
+
+        if (value.length > 2) {
+          value = value.slice(0, 2) + '/' + value.slice(2);
+        }
+
+        input.value = value;
+      });
+    }
+  });
+}
+
+// Checkout
 function setupCheckout() {
-  checkoutBtn?.addEventListener("click", async () => {
-    if (cart.length === 0) return alert("Your cart is empty!"); //Stops checkout flow if cart is empty or form is invalid
-    if (!validateForm(checkoutForm))
-      return alert("Please fix errors in the form.");
+  if (!checkoutBtn || !checkoutForm) return;
 
-    // Checkout progression bar, loading
-    const progress = document.createElement("div");
-    progress.className = "checkout-progress";
+  checkoutBtn.addEventListener('click', async () => {
+    if (cart.length === 0) {
+      alert('Your cart is empty!');
+      return;
+    }
+
+    if (!validateForm(checkoutForm)) {
+      alert('Please fix errors in the form.');
+      return;
+    }
+
+    const progress = document.createElement('div');
+    progress.className = 'checkout-progress';
     progress.style.cssText =
-      "position: fixed; top:0; left:0; width:0%; height:5px; background: linear-gradient(90deg, #8660f0, #c76bf1); z-index:9999; transition: width 0.3s;";
+      'position: fixed; top:0; left:0; width:0%; height:5px; background: linear-gradient(90deg, #8660f0, #c76bf1); z-index:9999; transition: width 0.3s;';
+
     document.body.appendChild(progress);
 
     let width = 0;
+
     const interval = setInterval(() => {
-      //Starts timed animation
-      width += 2; //Simulate checkout prosessing
-      progress.style.width = width + "%";
+      width += 2;
+      progress.style.width = width + '%';
+
       if (width >= 100) {
-        //Stop animation at 100% and take customer to confirmation page
         clearInterval(interval);
-        progress.innerHTML = `<span style="color:#9e9d9d;position:absolute;right:10px;top:-25px;"></span>`; //Updates progress bar after completed
+
         setTimeout(() => {
-          //Waits a moment before completing purchase and redirect customer
-          localStorage.setItem("lastorder", JSON.stringify(cart)); //Saves the order, clear cart and update storage
+          localStorage.setItem('lastorder', JSON.stringify(cart));
           cart = [];
-          localStorage.removeItem("cart");
+          localStorage.removeItem(cartKey);
           saveCart();
-          window.location.href = "confirmation/index.html"; //Redirect customer to confirmation page
+          window.location.href = 'confirmation/index.html';
         }, 700);
       }
     }, 30);
   });
 }
 
-//Init the cart when page has fully loaded
-window.addEventListener("DOMContentLoaded", initCart);
+// Start
+window.addEventListener('DOMContentLoaded', initCart);

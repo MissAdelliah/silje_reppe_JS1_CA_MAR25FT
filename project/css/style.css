@@ -1,5 +1,5 @@
 * {
-  font-family: "Inter", sans-serif, Tahoma, Geneva, Verdana;
+  font-family: 'Inter', sans-serif, Tahoma, Geneva, Verdana;
   box-sizing: border-box;
 }
 
@@ -8,7 +8,7 @@ body {
 }
 
 .wrap {
-  max-width: 1600px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 30px 35px;
   background-color: rgb(41, 39, 41);
@@ -76,7 +76,7 @@ main.wrap {
   align-items: right;
 }
 
-.search input[type="search"] {
+.search input[type='search'] {
   min-width: 230px;
   max-width: 300px;
   background: rgb(41, 39, 41);
@@ -142,7 +142,9 @@ main.wrap {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   overflow: hidden;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
   padding: 15px 15px;
 }
 .thumb {
@@ -255,7 +257,9 @@ a.chip {
   max-width: 900px;
   margin: 40px auto;
   color: rgb(221, 221, 221);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .product-card:hover {
@@ -305,7 +309,9 @@ a.chip {
   border: 2px solid #9e9d9d;
   color: #9e9d9d;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
 }
 
 .button-add:hover {
@@ -345,7 +351,9 @@ h1 {
   border-radius: 10px;
   padding: 15px;
   align-items: center;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
 }
 
 .cart-card:hover {
@@ -392,7 +400,9 @@ h1 {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .cart-card .remove-btn:hover {
@@ -426,7 +436,9 @@ h1 {
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: #fff;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
 }
 
 #checkout-btn:hover {
@@ -541,6 +553,8 @@ h1 {
 
 .checkout {
   margin-top: 40px;
+  display: flex;
+  justify-content: center;
 }
 
 .checkout__form,
@@ -548,6 +562,7 @@ h1 {
   display: grid;
   gap: 30px;
   margin-top: 30px;
+  max-width: 800px;
 }
 
 .checkout__section,
@@ -575,6 +590,7 @@ h1 {
   flex-direction: column;
   gap: 6px;
   margin-bottom: 15px;
+  max-width: 800px;
 }
 
 .checkout__field label {
@@ -596,6 +612,11 @@ h1 {
 .checkout__field small {
   color: rgb(199, 107, 241);
   padding-top: 10px;
+}
+
+.website__rights a {
+  text-decoration: none;
+  color: white;
 }
 
 /*** Responsiveness ***/
