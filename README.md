@@ -14,29 +14,7 @@ This is e-commerse game store
 ## Improvements to be made, bugs
 - Duplicated cart logic
 
-## Prerequisites
--
-
-## Getting Started
--
-
-### Installation
--
-
-### Running the project
--
-
-### Running tests
--
-
-## Environment Variables
--
-
-## Available Scripts
--
-
-## Technologies
-
+## used
 - JavaScript
 - HTML
 - CSS
@@ -46,3 +24,4 @@ This is e-commerse game store
 ## Author
 
 MissAdelliah / Silje Reppe
+
